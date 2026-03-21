@@ -80,7 +80,7 @@ This project focuses on:
 - Phase 6 — Application layer (API/UI)
 - Phase 7 — Observability and evaluation
 
-See [roadmap.md](./roadmap.md) for more details.
+See [roadmap.md](./docs/roadmap.md) for more details.
 
 ---
 
