@@ -238,22 +238,14 @@ The prototype demonstrates a reference architecture for building AI applications
 The objective of the prototype is to understand how an AI platform can support multiple potential AI applications. The platform is intentionally designed generically so that different use cases can be implemented on top of the same architectural foundation.
 
 The objectives of the prototype are to understand:
-
-  ----------------------------------------------------------------------------------
-  **Focus Area**                   **Description**
-  -------------------------------- -------------------------------------------------
-  AI application architecture      How modern AI products are structured
-
-  Retrieval Augmented Generation   Combining LLMs with knowledge retrieval
-
-  Vector databases                 Semantic search over documents
-
-  Model inference platforms        How LLMs are served in production
-
-  AI observability                 Monitoring prompts, responses and system health
-
-  Platform architecture            Layered architecture patterns for AI systems
-  ----------------------------------------------------------------------------------
+| Focus Area | Description |
+|------------|-------------|
+| AI application architecture | How modern AI products are structured |
+| Retrieval Augmented Generation | Combining LLMs with knowledge retrieval |
+| Vector databases | Semantic search over documents |
+| Model inference platforms | How LLMs are served in production |
+| AI observability | Monitoring prompts, responses and system health |
+| Platform architecture | Layered architecture patterns for AI systems |
 
 # High‑Level Architecture
 
