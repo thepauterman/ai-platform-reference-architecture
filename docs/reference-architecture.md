@@ -13,195 +13,195 @@
 >
 > [Architecture overview](#architecture-overview)
 >
-> [Architectural Design Principles 6](#architectural-design-principles)
+> [Architectural Design Principles](#architectural-design-principles)
 >
-> [Control Flow Overview 6](#control-flow-overview)
+> [Control Flow Overview](#control-flow-overview)
 
-[**4. Infrastructure Layer 6**](#infrastructure-layer)
+[**4. Infrastructure Layer**](#infrastructure-layer)
 
-> [Purpose 6](#purpose)
+> [Purpose](#purpose)
 >
-> [Platform Options 7](#platform-options)
+> [Platform Options](#platform-options)
 >
-> [Rationale 7](#rationale)
+> [Rationale](#rationale)
 
-[**5. Data Platform Layer 7**](#data-platform-layer)
+[**5. Data Platform Layer**](#data-platform-layer)
 
-> [Purpose 7](#purpose-1)
+> [Purpose](#purpose-1)
 >
-> [Document Processing and Chunking 8](#document-processing-and-chunking)
+> [Document Processing and Chunking](#document-processing-and-chunking)
 >
-> [Data Platform Components 8](#data-platform-components)
+> [Data Platform Components](#data-platform-components)
 >
-> [Technology Options 8](#technology-options)
+> [Technology Options](#technology-options)
 >
-> [Rationale 8](#rationale-1)
+> [Rationale](#rationale-1)
 
-[**6. Retrieval and Vector Database Layer 9**](#retrieval-and-vector-database-layer)
+[**6. Retrieval and Vector Database Layer**](#retrieval-and-vector-database-layer)
 
-> [Purpose 9](#purpose-2)
+> [Purpose](#purpose-2)
 >
-> [Technology Options 9](#technology-options-1)
+> [Technology Options](#technology-options-1)
 >
-> [Rationale 9](#rationale-2)
+> [Rationale](#rationale-2)
 
-[**7. Model Serving / Inference Layer 9**](#model-serving-inference-layer)
+[**7. Model Serving / Inference Layer**](#model-serving-inference-layer)
 
-> [Purpose 9](#purpose-3)
+> [Purpose](#purpose-3)
 >
-> [Technology Options 10](#technology-options-2)
+> [Technology Options](#technology-options-2)
 >
-> [Rationale 10](#rationale-3)
+> [Rationale](#rationale-3)
 
-[**8. Model Gateway / Routing Layer 10**](#model-gateway-routing-layer)
+[**8. Model Gateway / Routing Layer**](#model-gateway-routing-layer)
 
-> [Purpose 10](#purpose-4)
+> [Purpose](#purpose-4)
 >
-> [Technology Options 10](#technology-options-3)
+> [Technology Options](#technology-options-3)
 >
-> [Rationale 11](#rationale-4)
+> [Rationale](#rationale-4)
 
-[**9. AI Orchestration Layer 11**](#ai-orchestration-layer)
+[**9. AI Orchestration Layer**](#ai-orchestration-layer)
 
-> [Purpose 11](#purpose-5)
+> [Purpose](#purpose-5)
 >
-> [Technology Options 11](#technology-options-4)
+> [Technology Options](#technology-options-4)
 >
-> [Agentic Capabilities Included in v1 12](#agentic-capabilities-included-in-v1)
+> [Agentic Capabilities Included in v1](#agentic-capabilities-included-in-v1)
 >
-> [Initial Tool Types for v1 12](#initial-tool-types-for-v1)
+> [Initial Tool Types for v1](#initial-tool-types-for-v1)
 >
-> [Rationale 13](#rationale-5)
+> [Rationale](#rationale-5)
 
-[**10. Observability and Monitoring Layer 13**](#observability-and-monitoring-layer)
+[**10. Observability and Monitoring Layer**](#observability-and-monitoring-layer)
 
-> [Purpose 13](#purpose-6)
+> [Purpose](#purpose-6)
 >
-> [Technology Options 13](#technology-options-5)
+> [Technology Options](#technology-options-5)
 >
-> [Rationale 14](#rationale-6)
+> [Rationale](#rationale-6)
 
-[**11. Application Layer 14**](#application-layer)
+[**11. Application Layer**](#application-layer)
 
-> [Purpose 14](#purpose-7)
+> [Purpose](#purpose-7)
 >
-> [Technology Options 14](#technology-options-6)
+> [Technology Options](#technology-options-6)
 >
-> [Rationale 14](#rationale-7)
+> [Rationale](#rationale-7)
 
-[**12. Cost Considerations 14**](#cost-considerations)
+[**12. Cost Considerations**](#cost-considerations)
 
-> [Purpose 14](#purpose-8)
+> [Purpose](#purpose-8)
 >
-> [Cost Optimization Principles 15](#cost-optimization-principles)
+> [Cost Optimization Principles](#cost-optimization-principles)
 >
-> [Rationale 15](#rationale-8)
+> [Rationale](#rationale-8)
 
-[**13. Security and AI Governance 16**](#security-and-ai-governance)
+[**13. Security and AI Governance**](#security-and-ai-governance)
 
-> [Purpose 16](#purpose-9)
+> [Purpose](#purpose-9)
 >
-> [Governance Controls 16](#governance-controls)
+> [Governance Controls](#governance-controls)
 >
-> [Rationale 17](#rationale-9)
+> [Rationale](#rationale-9)
 
-[**14. Reference Architecture Diagrams 18**](#reference-architecture-diagrams)
+[**14. Reference Architecture Diagrams**](#reference-architecture-diagrams)
 
-> [Layered Platform View 18](#layered-platform-view)
+> [Layered Platform View](#layered-platform-view)
 >
-> [RAG Request Flow 19](#rag-request-flow)
+> [RAG Request Flow](#rag-request-flow)
 >
-> [Control Plane vs Data Plane Diagram 19](#control-plane-vs-data-plane-diagram)
+> [Control Plane vs Data Plane Diagram](#control-plane-vs-data-plane-diagram)
 
-[**15. Evaluation Layer (optional for v1) 20**](#evaluation-layer-optional-for-v1)
+[**15. Evaluation Layer (optional for v1)**](#evaluation-layer-optional-for-v1)
 
-> [Purpose 20](#purpose-10)
+> [Purpose](#purpose-10)
 >
-> [Evaluation Methods 20](#evaluation-methods)
+> [Evaluation Methods](#evaluation-methods)
 >
-> [Example Evaluation Metrics 20](#example-evaluation-metrics)
+> [Example Evaluation Metrics](#example-evaluation-metrics)
 >
-> [Technology Options 21](#technology-options-7)
+> [Technology Options](#technology-options-7)
 
-[**16. Implementation Roadmap 21**](#implementation-roadmap)
+[**16. Implementation Roadmap**](#implementation-roadmap)
 
-> [Phase 1 --- Platform Foundation 21](#phase-1-platform-foundation)
+> [Phase 1 --- Platform Foundation](#phase-1-platform-foundation)
 >
-> [Phase 2 --- Data Platform 21](#phase-2-data-platform)
+> [Phase 2 --- Data Platform](#phase-2-data-platform)
 >
-> [Phase 3 --- Retrieval Layer 21](#phase-3-retrieval-layer)
+> [Phase 3 --- Retrieval Layer](#phase-3-retrieval-layer)
 >
-> [Phase 4 --- Model Integration 21](#phase-4-model-integration)
+> [Phase 4 --- Model Integration](#phase-4-model-integration)
 >
-> [Phase 5 --- AI Orchestration 21](#phase-5-ai-orchestration)
+> [Phase 5 --- AI Orchestration](#phase-5-ai-orchestration)
 >
-> [Phase 6 --- Application Layer 21](#phase-6-application-layer)
+> [Phase 6 --- Application Layer](#phase-6-application-layer)
 >
-> [Phase 7 --- Observability and Evaluation 22](#phase-7-observability-and-evaluation)
+> [Phase 7 --- Observability and Evaluation](#phase-7-observability-and-evaluation)
 
-[**17. Future Architecture Evolution 22**](#future-architecture-evolution)
+[**17. Future Architecture Evolution**](#future-architecture-evolution)
 
 > [Purpose 22](#purpose-11)
 >
-> [Is the Architecture Future-Proof? 22](#is-the-architecture-future-proof)
+> [Is the Architecture Future-Proof?](#is-the-architecture-future-proof)
 >
-> [Why the Current Architecture Can Evolve 22](#why-the-current-architecture-can-evolve)
+> [Why the Current Architecture Can Evolve](#why-the-current-architecture-can-evolve)
 >
-> [Support for Agentic Architectures 23](#support-for-agentic-architectures)
+> [Support for Agentic Architectures](#support-for-agentic-architectures)
 >
-> [Agentic Capabilities That Could Be Added 23](#agentic-capabilities-that-could-be-added)
+> [Agentic Capabilities That Could Be Added](#agentic-capabilities-that-could-be-added)
 >
-> [Example Agentic Evolution Path 24](#example-agentic-evolution-path)
+> [Example Agentic Evolution Path](#example-agentic-evolution-path)
 >
-> [Support for Other Architectural Developments 24](#support-for-other-architectural-developments)
+> [Support for Other Architectural Developments](#support-for-other-architectural-developments)
 >
-> [Multi-Model Platforms 24](#multi-model-platforms)
+> [Multi-Model Platforms](#multi-model-platforms)
 >
-> [Hybrid Retrieval 24](#hybrid-retrieval)
+> [Hybrid Retrieval](#hybrid-retrieval)
 >
-> [Self-Hosted Inference and GPU Infrastructure 25](#self-hosted-inference-and-gpu-infrastructure)
+> [Self-Hosted Inference and GPU Infrastructure](#self-hosted-inference-and-gpu-infrastructure)
 >
-> [Stronger Evaluation Loops 25](#stronger-evaluation-loops)
+> [Stronger Evaluation Loops](#stronger-evaluation-loops)
 >
-> [Enterprise Governance and Policy Engines 25](#enterprise-governance-and-policy-engines)
+> [Enterprise Governance and Policy Engines](#enterprise-governance-and-policy-engines)
 >
-> [What Would Need to Change Over Time? 26](#what-would-need-to-change-over-time)
+> [What Would Need to Change Over Time?](#what-would-need-to-change-over-time)
 >
-> [Limitations of the Current Version 26](#limitations-of-the-current-version)
+> [Limitations of the Current Version](#limitations-of-the-current-version)
 >
-> [Platform Maturity Roadmap 27](#platform-maturity-roadmap)
+> [Platform Maturity Roadmap](#platform-maturity-roadmap)
 >
-> [Phase 1 --- Prototype 27](#phase-1-prototype)
+> [Phase 1 --- Prototype](#phase-1-prototype)
 >
-> [Phase 2 --- Production AI Application 27](#phase-2-production-ai-application)
+> [Phase 2 --- Production AI Application](#phase-2-production-ai-application)
 >
-> [Phase 3 --- AI Platform 27](#phase-3-ai-platform)
+> [Phase 3 --- AI Platform](#phase-3-ai-platform)
 
-[**18. Key Architectural Insights 28**](#key-architectural-insights)
+[**18. Key Architectural Insights**](#key-architectural-insights)
 
-[**19. Additional Architectural Design Principles 28**](#additional-architectural-design-principles)
+[**19. Additional Architectural Design Principles**](#additional-architectural-design-principles)
 
-[**20. Architecture and Learning Goals Relationship 29**](#architecture-and-learning-goals-relationship)
+[**20. Architecture and Learning Goals Relationship**](#architecture-and-learning-goals-relationship)
 
-[**21. Closing Thoughts 30**](#closing-thoughts)
+[**21. Closing Thoughts**](#closing-thoughts)
 
-[**Appendix A. Technologies to Explore 30**](#appendix-a.-technologies-to-explore)
+[**Appendix A. Technologies to Explore**](#appendix-a.-technologies-to-explore)
 
-[**Appendix B. Developer Tooling 30**](#appendix-b.-developer-tooling)
+[**Appendix B. Developer Tooling**](#appendix-b.-developer-tooling)
 
-> [Rationale 31](#rationale-10)
+> [Rationale](#rationale-10)
 
-[**Appendix C. AI Applications and Companies Using Similar Architectures 31**](#appendix-c.-ai-applications-and-companies-using-similar-architectures)
+[**Appendix C. AI Applications and Companies Using Similar Architectures**](#appendix-c.-ai-applications-and-companies-using-similar-architectures)
 
-> [Engineering and Platform Copilots 31](#engineering-and-platform-copilots)
+> [Engineering and Platform Copilots](#engineering-and-platform-copilots)
 >
-> [Enterprise Knowledge Assistants 32](#enterprise-knowledge-assistants)
+> [Enterprise Knowledge Assistants](#enterprise-knowledge-assistants)
 >
-> [Customer Support AI 32](#customer-support-ai)
+> [Customer Support AI](#customer-support-ai)
 >
-> [Research and Technical Assistants 33](#research-and-technical-assistants)
+> [Research and Technical Assistants](#research-and-technical-assistants)
 >
-> [Why This Architecture Works Across Many Use Cases 33](#why-this-architecture-works-across-many-use-cases)
+> [Why This Architecture Works Across Many Use Cases](#why-this-architecture-works-across-many-use-cases)
 
 # Context
 
