@@ -3,15 +3,15 @@
 **Author**: Pau Gonzalez **Date**: 03/21/2026\
 **Primary Cloud Platform**: Google Cloud Platform (GCP)
 
-[**1. Context 4**](#context)
+[**1. Context**](#context)
 
-[**2. Objective 4**](#objective)
+[**2. Objective**](#objective)
 
-[**3. High‑Level Architecture 5**](#highlevel-architecture)
+[**3. High‑Level Architecture**](#highlevel-architecture)
 
-> [Architecture summary 5](#architecture-summary)
+> [Architecture summary](#architecture-summary)
 >
-> [Architecture overview 5](#architecture-overview)
+> [Architecture overview](#architecture-overview)
 >
 > [Architectural Design Principles 6](#architectural-design-principles)
 >
