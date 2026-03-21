@@ -25,7 +25,7 @@ This repository explores how these components fit together in a **layered archit
 
 ## 🏗️ Architecture
 
-![AI Platform Architecture](./diagrams/reference-architecture-layers.png)
+![AI Platform Architecture](./docs/diagrams/reference-architecture-layers.png)
 
 The platform is organized into four main layers:
 
