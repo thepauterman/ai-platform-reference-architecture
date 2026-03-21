@@ -72,13 +72,13 @@ This project focuses on:
 
 ## 🛣️ Roadmap
 
-- Phase 1 — Platform foundation (cloud, IAM, infra)
-- Phase 2 — Data platform (ingestion, embeddings)
-- Phase 3 — Retrieval layer (vector search)
-- Phase 4 — Model integration (inference, routing)
-- Phase 5 — Orchestration (RAG workflows, tools)
-- Phase 6 — Application layer (API/UI)
-- Phase 7 — Observability and evaluation
+- Phase 1 - Platform foundation (cloud, IAM, infra)
+- Phase 2 - Data platform (ingestion, embeddings)
+- Phase 3 - Retrieval layer (vector search)
+- Phase 4 - Model integration (inference, routing)
+- Phase 5 - Orchestration (RAG workflows, tools)
+- Phase 6 - Application layer (API/UI)
+- Phase 7 - Observability and evaluation
 
 See [roadmap.md](./docs/roadmap.md) for more details.
 
