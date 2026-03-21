@@ -377,43 +377,29 @@ Each chunk retains metadata such as the source document and location within the 
 
 ## Data Platform Components
 
-  --------------------------------------------------------------------------------------------------
-  **Component**                    **Responsibility**
-  -------------------------------- -----------------------------------------------------------------
-  Document Storage                 Stores PDFs, documentation and internal knowledge artifacts
-
-  Ingestion Pipeline               Processes documents into structured format
-
-  Embedding Pipeline               Converts text to vector embeddings
-
-  Metadata Store                   Tracks document metadata and indexing
-
-  Document Processing / Chunking   Splits extracted text into retrieval-ready chunks with metadata
-  --------------------------------------------------------------------------------------------------
+| Component | Responsibility |
+|----------|----------------|
+| Document Storage | Stores PDFs, documentation, and internal knowledge artifacts |
+| Ingestion Pipeline | Processes documents into structured format |
+| Embedding Pipeline | Converts text to vector embeddings |
+| Metadata Store | Tracks document metadata and indexing |
+| Document Processing / Chunking | Splits extracted text into retrieval-ready chunks with metadata |
 
 ## Technology Options
 
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Option**                              **Technologies**                                                     **Advantages**                                  **Tradeoffs**
-  --------------------------------------- -------------------------------------------------------------------- ----------------------------------------------- --------------------------------
-  **Cloud Storage Pipeline (Selected)**   Cloud Storage + Cloud Run ingestion service + Vertex AI embeddings   Simple architecture, low operational overhead   Limited analytics capabilities
-
-  Data Warehouse                          BigQuery, Snowflake                                                  Advanced analytics integration                  Higher complexity
-
-  Data Lake Architecture                  Lakehouse platforms                                                  Flexible data processing                        Operational complexity
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Option | Technologies | Advantages | Tradeoffs |
+|--------|-------------|------------|-----------|
+| Cloud Storage Pipeline (Selected) | Cloud Storage, Cloud Run, Vertex AI embeddings | Simple architecture, low operational overhead | Limited analytics capabilities |
+| Data Warehouse | BigQuery, Snowflake | Advanced analytics integration | Higher complexity |
+| Data Lake Architecture | Lakehouse platforms | Flexible data processing | Operational complexity |
 
 ## Rationale
 
-  -------------------------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ ------------------------------------------------------
-  Simplicity                     Minimal infrastructure required for document storage
-
-  Scalability                    Object storage easily scales for large document sets
-
-  Integration                    Works seamlessly with embedding pipelines
-  -------------------------------------------------------------------------------------
+| Decision Factor | Explanation |
+|----------------|------------|
+| Simplicity | Minimal infrastructure required for document storage |
+| Scalability | Object storage easily scales for large document sets |
+| Integration | Works seamlessly with embedding pipelines |
 
 # Retrieval and Vector Database Layer
 
@@ -433,29 +419,20 @@ When a user query arrives:
 
 ## Technology Options
 
-  --------------------------------------------------------------------------------------------------------------------------------
-  **Technology**                           **Type**        **Advantages**                     **Tradeoffs**
-  ---------------------------------------- --------------- ---------------------------------- ------------------------------------
-  **Vertex AI Vector Search (Selected)**   Managed         Native GCP integration, scalable   Less infrastructure control
-
-  Pinecone                                 SaaS            Very simple deployment             Vendor dependency
-
-  Weaviate                                 Open source     Flexible deployment                Requires infrastructure management
-
-  Milvus                                   Open source     High performance vector search     Operational complexity
-  --------------------------------------------------------------------------------------------------------------------------------
+| Technology | Type | Advantages | Tradeoffs |
+|-----------|------|------------|-----------|
+| Vertex AI Vector Search (Selected) | Managed | Native GCP integration, scalable | Less infrastructure control |
+| Pinecone | SaaS | Very simple deployment | Vendor dependency |
+| Weaviate | Open source | Flexible deployment | Requires infrastructure management |
+| Milvus | Open source | High-performance vector search | Operational complexity |
 
 ## Rationale
 
-  -------------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ ------------------------------------------
-  Managed service                Reduces operational overhead
-
-  Native integration             Works seamlessly with other GCP services
-
-  Scalability                    Designed for large scale vector indexing
-  -------------------------------------------------------------------------
+| Decision Factor | Explanation |
+|----------------|------------|
+| Managed service | Reduces operational overhead |
+| Native integration | Works seamlessly with other GCP services |
+| Scalability | Designed for large-scale vector indexing |
 
 # Model Serving / Inference Layer
 
@@ -467,15 +444,11 @@ This layer receives prompts from the orchestration layer and produces the final 
 
 ## Technology Options
 
-  -------------------------------------------------------------------------------------------------------------------------------------------------
-  **Option**                          **Technologies**                 **Advantages**                             **Tradeoffs**
-  ----------------------------------- -------------------------------- ------------------------------------------ ---------------------------------
-  **Managed Model APIs (Selected)**   Vertex AI, OpenAI, Anthropic     Quick deployment, minimal infrastructure   External API dependency
-
-  Self‑Hosted Inference               vLLM, NVIDIA Triton, Ray Serve   Control over infrastructure and cost       Requires GPU infrastructure
-
-  Hybrid Architecture                 Managed + self‑hosted models     Flexibility                                Higher architectural complexity
-  -------------------------------------------------------------------------------------------------------------------------------------------------
+| Option | Technologies | Advantages | Tradeoffs |
+|--------|-------------|------------|-----------|
+| Managed Model APIs (Selected) | Vertex AI, OpenAI, Anthropic | Quick deployment, minimal infrastructure | External API dependency |
+| Self-Hosted Inference | vLLM, NVIDIA Triton, Ray Serve | Full control over infrastructure and cost | Requires GPU infrastructure |
+| Hybrid Architecture | Managed + self-hosted models | Flexibility | Higher architectural complexity |
 
 ## Rationale
 
@@ -499,15 +472,11 @@ This layer becomes increasingly important as AI systems begin using multiple mod
 
 ## Technology Options
 
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Option**                                 **Technologies**                         **Advantages**                              **Tradeoffs**
-  ------------------------------------------ ---------------------------------------- ------------------------------------------- -------------------------------
-  **Lightweight Gateway Logic (Selected)**   Custom routing logic in Python service   Simple to implement, good for learning      Limited standardization
-
-  Model Gateway Libraries / Proxies          LiteLLM-style routing, API proxies       Easier multi-model abstraction              Adds another dependency layer
-
-  Enterprise AI Gateway                      Internal platform gateway                Centralized governance and policy control   Higher complexity
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Option | Technologies | Advantages | Tradeoffs |
+|--------|-------------|------------|-----------|
+| Lightweight Gateway Logic (Selected) | Custom Python service | Simple to implement, flexible | Limited standardization |
+| Model Gateway Libraries / Proxies | LiteLLM-style routing, API proxies | Easier multi-model abstraction | Adds dependency layer |
+| Enterprise AI Gateway | Internal platform gateway | Centralized governance and policy control | Higher complexity |
 
 ## Rationale
 
