@@ -127,17 +127,17 @@
 
 > [Phase 1 --- Platform Foundation](#phase-1-----platform-foundation)
 >
-> [Phase 2 --- Data Platform](#phase-2-data-platform)
+> [Phase 2 --- Data Platform](#phase-2-----data-platform)
 >
-> [Phase 3 --- Retrieval Layer](#phase-3-retrieval-layer)
+> [Phase 3 --- Retrieval Layer](#phase-3-----retrieval-layer)
 >
-> [Phase 4 --- Model Integration](#phase-4-model-integration)
+> [Phase 4 --- Model Integration](#phase-4-----model-integration)
 >
-> [Phase 5 --- AI Orchestration](#phase-5-ai-orchestration)
+> [Phase 5 --- AI Orchestration](#phase-5-----ai-orchestration)
 >
-> [Phase 6 --- Application Layer](#phase-6-application-layer)
+> [Phase 6 --- Application Layer](#phase-6-----application-layer)
 >
-> [Phase 7 --- Observability and Evaluation](#phase-7-observability-and-evaluation)
+> [Phase 7 --- Observability and Evaluation](#phase-7-----observability-and-evaluation)
 
 [**17. Future Architecture Evolution**](#future-architecture-evolution)
 
