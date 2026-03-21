@@ -125,7 +125,7 @@
 
 [**16. Implementation Roadmap**](#implementation-roadmap)
 
-> [Phase 1 --- Platform Foundation](#phase-1------platform-foundation)
+> [Phase 1 --- Platform Foundation](#phase-1-----platform-foundation)
 >
 > [Phase 2 --- Data Platform](#phase-2-data-platform)
 >
