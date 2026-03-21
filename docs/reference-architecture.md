@@ -693,7 +693,7 @@ The following diagrams illustrate the structural architecture of the platform an
 
 The following diagram represents the reference architecture of the prototype AI platform. It illustrates the relationship between the application layer, orchestration services, retrieval components, model inference, and the underlying cloud infrastructure.
 
-![Layered Platform View](docs/diagrams/AI-Platform-Reference-Architecture-diagram.png){width="6.5in" height="5.319444444444445in"}
+![Layered Platform View](diagrams/AI-Platform-Reference-Architecture-diagram.png){width="6.5in" height="5.319444444444445in"}
 
 ##  
 
@@ -701,13 +701,13 @@ The following diagram represents the reference architecture of the prototype AI 
 
 The following diagram shows the runtime execution path when a user sends a query to the system.
 
-![RAG Request Flow](docs/diagrams/Sequence-diagram.png){width="6.5in" height="3.111111111111111in"}
+![RAG Request Flow](diagrams/Sequence-diagram.png){width="6.5in" height="3.111111111111111in"}
 
 ## Control Plane vs Data Plane Diagram
 
 The following diagram separates the platform into control plane and data plane responsibilities, which is a common way AI-native platform teams reason about architecture.
 
-![Control Plane vs Data Plane Diagram](docs/diagrams/ControlvsData-plane-diagram.png){width="1.2645384951881016in" height="3.5468755468066493in"}
+![Control Plane vs Data Plane Diagram](diagrams/ControlvsData-plane-diagram.png){width="1.2645384951881016in" height="3.5468755468066493in"}
 
 **Why This Distinction Matters**
 
