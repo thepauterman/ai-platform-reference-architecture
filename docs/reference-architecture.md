@@ -452,15 +452,11 @@ This layer receives prompts from the orchestration layer and produces the final 
 
 ## Rationale
 
-  --------------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ -------------------------------------------
-  Speed of experimentation       Rapid prototype development
-
-  Reliability                    Managed infrastructure scaling
-
-  Simplicity                     No GPU infrastructure management required
-  --------------------------------------------------------------------------
+| Decision Factor         | Explanation                               |
+|------------------------|-------------------------------------------|
+| Speed of experimentation | Rapid prototype development              |
+| Reliability            | Managed infrastructure scaling            |
+| Simplicity             | No GPU infrastructure management required |
 
 # Model Gateway / Routing Layer
 
@@ -480,17 +476,12 @@ This layer becomes increasingly important as AI systems begin using multiple mod
 
 ## Rationale
 
-  ------------------------------------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ -----------------------------------------------------------------
-  Industry relevance             Multi-model routing is increasingly common in AI-native systems
-
-  Learning value                 Helps understand cost, latency, and capability tradeoffs
-
-  Scalability                    Creates a clean path toward future platformization
-
-  Simplicity                     Lightweight logic is sufficient for the prototype
-  ------------------------------------------------------------------------------------------------
+| Decision Factor      | Explanation                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| Industry relevance  | Multi-model routing is increasingly common in AI-native systems              |
+| Learning value      | Helps understand cost, latency, and capability tradeoffs                     |
+| Scalability         | Creates a clean path toward future platformization                           |
+| Simplicity          | Lightweight logic is sufficient for the prototype                            |
 
 # AI Orchestration Layer
 
@@ -516,77 +507,51 @@ This layer effectively acts as the control plane of the AI system, managing how 
 
 ## Technology Options
 
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Option**                                                            **Technologies**                                                                  **Advantages**                                                       **Tradeoffs**
-  --------------------------------------------------------------------- --------------------------------------------------------------------------------- -------------------------------------------------------------------- -------------------------------------------------
-  **Custom Orchestration Service + Framework Exploration (Selected)**   Python service, with optional LangChain / LlamaIndex / CrewAI / AutoGPT modules   Keeps core architecture transparent while enabling experimentation   Slightly broader implementation scope
-
-  RAG Framework-Centric Approach                                        LangChain, LlamaIndex                                                             Faster development and strong ecosystem                              Additional abstraction and framework dependency
-
-  Agent-First Approach                                                  CrewAI, AutoGPT                                                                   Good for multi-step reasoning and autonomous task workflows          Less predictable behavior and higher complexity
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Option                                                                 | Technologies                                                                 | Advantages                                                      | Tradeoffs                              |
+|------------------------------------------------------------------------|------------------------------------------------------------------------------|------------------------------------------------------------------|----------------------------------------|
+| Custom Orchestration Service + Framework Exploration (Selected)         | Python service, with optional LangChain / LlamaIndex / CrewAI / AutoGPT modules | Keeps core architecture transparent while enabling experimentation | Slightly broader implementation scope  |
+| RAG Framework-Centric Approach                                         | LangChain, LlamaIndex                                                        | Faster development and strong ecosystem                          | Additional abstraction and dependency  |
+| Agent-First Approach                                                   | CrewAI, AutoGPT                                                              | Good for multi-step reasoning and autonomous workflows           | Less predictable behavior, complexity  |
 
 ## Agentic Capabilities Included in v1
 
-  -----------------------------------------------------------------------------------------------------------------------------------------------------
-  **Capability**                 **Description**                                                              **Scope Boundary**
-  ------------------------------ ---------------------------------------------------------------------------- -----------------------------------------
-  Query classification           Distinguish between direct Q&A, deeper retrieval, and tool-assisted tasks    No autonomous task creation
-
-  Tool registry                  Small set of explicitly allowed tools available to orchestration             Only approved read-only tools
-
-  Planner / executor flow        Lightweight step planning before retrieval or tool use                       Short, bounded workflows only
-
-  Second-pass retrieval          Perform an additional retrieval step if first-pass context is insufficient   Limited to a small number of steps
-
-  Human-in-the-loop checkpoint   Return proposed actions or next steps for user confirmation                  No autonomous external action execution
-  -----------------------------------------------------------------------------------------------------------------------------------------------------
+| Capability                   | Description                                                              | Scope Boundary                          |
+|------------------------------|--------------------------------------------------------------------------|------------------------------------------|
+| Query classification         | Distinguish between direct Q&A, deeper retrieval, and tool-assisted tasks | No autonomous task creation              |
+| Tool registry                | Small set of explicitly allowed tools available to orchestration          | Only approved read-only tools            |
+| Planner / executor flow      | Lightweight step planning before retrieval or tool use                    | Short, bounded workflows only            |
+| Second-pass retrieval        | Perform an additional retrieval step if first-pass context is insufficient| Limited to a small number of steps       |
+| Human-in-the-loop checkpoint | Return proposed actions or next steps for user confirmation               | No autonomous external action execution  |
 
 ## Initial Tool Types for v1
 
-  ----------------------------------------------------------------------------------------
-  **Tool Type**                  **Example Purpose**
-  ------------------------------ ---------------------------------------------------------
-  Retrieval tool                 Retrieve additional documentation or architecture notes
-
-  Metadata lookup tool           Inspect document metadata or source type
-
-  Structured comparison tool     Compare architectures, services, or tradeoffs
-
-  Checklist tool                 Return deployment or troubleshooting checklists
-  ----------------------------------------------------------------------------------------
+| Tool Type                  | Example Purpose                                              |
+|-----------------------------|--------------------------------------------------------------|
+| Retrieval tool              | Retrieve additional documentation or architecture notes      |
+| Metadata lookup tool        | Inspect document metadata or source type                     |
+| Structured comparison tool  | Compare architectures, services, or tradeoffs                |
+| Checklist tool              | Return deployment or troubleshooting checklists              |
 
 On top of that base, selected frameworks can be evaluated in isolated experiments:
 
-  --------------------------------------------------------------------------------------------------
-  **Framework**                  **Exploration Purpose**
-  ------------------------------ -------------------------------------------------------------------
-  LlamaIndex                     Explore document indexing and retrieval-centric RAG patterns
-
-  LangChain                      Explore orchestration abstractions, tool integrations, and chains
-
-  CrewAI                         Explore multi-agent coordination patterns
-
-  AutoGPT                        Explore autonomous task execution and agent loops
-  --------------------------------------------------------------------------------------------------
+| Framework   | Exploration Purpose                                                         |
+|-------------|------------------------------------------------------------------------------|
+| LlamaIndex  | Explore document indexing and retrieval-centric RAG patterns                |
+| LangChain   | Explore orchestration abstractions, tool integrations, and chains           |
+| CrewAI      | Explore multi-agent coordination patterns                                   |
+| AutoGPT     | Explore autonomous task execution and agent loops                           |
 
 This allows the prototype to remain architecturally clear while also functioning as a learning platform for AI-native orchestration frameworks and basic agentic workflows.
 
 ## Rationale
 
-  ------------------------------------------------------------------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ -----------------------------------------------------------------------------------------------
-  Architectural clarity          The custom orchestration layer keeps the core RAG workflow explicit and easy to understand
-
-  Exploration flexibility        Frameworks can be tested without redesigning the surrounding platform
-
-  Comparative learning           Enables side-by-side comparison between manual implementation and framework-driven approaches
-
-  Risk control                   Keeps experimental agent frameworks isolated from the core reference architecture
-
-  Practical agentic learning     Introduces tool use and planning without requiring a full autonomous agent runtime
-  ------------------------------------------------------------------------------------------------------------------------------
+| Decision Factor          | Explanation                                                                                                      |
+|-------------------------|------------------------------------------------------------------------------------------------------------------|
+| Architectural clarity   | The custom orchestration layer keeps the core RAG workflow explicit and easy to understand                      |
+| Exploration flexibility | Frameworks can be tested without redesigning the surrounding platform                                           |
+| Comparative learning    | Enables side-by-side comparison between manual implementation and framework-driven approaches                   |
+| Risk control            | Keeps experimental agent frameworks isolated from the core reference architecture                               |
+| Practical agentic learning | Introduces tool use and planning without requiring a full autonomous agent runtime                          |
 
 # Observability and Monitoring Layer
 
@@ -604,27 +569,19 @@ Observability becomes increasingly important as AI systems move into production.
 
 ## Technology Options
 
-  ------------------------------------------------------------------------------------------------------------------------------------------------
-  **Option**                                  **Technologies**              **Advantages**                           **Tradeoffs**
-  ------------------------------------------- ----------------------------- ---------------------------------------- -----------------------------
-  **Cloud Native Observability (Selected)**   Cloud Logging, Monitoring     Simple and integrated                    Limited AI‑specific metrics
-
-  AI Observability Platforms                  LangSmith, Arize              Advanced prompt tracing and evaluation   Additional cost
-
-  Custom Evaluation Pipelines                 Internal evaluation tooling   Full control                             Engineering overhead
-  ------------------------------------------------------------------------------------------------------------------------------------------------
+| Option                                | Technologies                  | Advantages                           | Tradeoffs                    |
+|---------------------------------------|-------------------------------|--------------------------------------|------------------------------|
+| Cloud Native Observability (Selected) | Cloud Logging, Monitoring     | Simple and integrated                | Limited AI-specific metrics  |
+| AI Observability Platforms            | LangSmith, Arize              | Advanced prompt tracing and evaluation | Additional cost              |
+| Custom Evaluation Pipelines           | Internal evaluation tooling   | Full control                         | Engineering overhead         |
 
 ## Rationale
 
-  ---------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ --------------------------------------
-  Simplicity                     Minimal operational overhead
-
-  Integration                    Native integration with GCP services
-
-  Prototype scope                Sufficient for early experimentation
-  ---------------------------------------------------------------------
+| Decision Factor | Explanation                              |
+|-----------------|------------------------------------------|
+| Simplicity      | Minimal operational overhead             |
+| Integration     | Native integration with GCP services     |
+| Prototype scope | Sufficient for early experimentation     |
 
 # Application Layer
 
@@ -642,27 +599,19 @@ Responsibilities include:
 
 ## Technology Options
 
-  --------------------------------------------------------------------------------------------------------------------------------
-  **Option**                             **Technologies**            **Advantages**                    **Tradeoffs**
-  -------------------------------------- --------------------------- --------------------------------- ---------------------------
-  **Web Application + API (Selected)**   Cloud Run service           Simple deployment model           Basic user interface
-
-  Chatbot Integration                    Slack / Teams bots          Integrated enterprise workflows   Limited UI control
-
-  Developer Platform UI                  Internal developer portal   Rich experience                   Higher development effort
-  --------------------------------------------------------------------------------------------------------------------------------
+| Option                           | Technologies              | Advantages                 | Tradeoffs                 |
+|----------------------------------|---------------------------|----------------------------|----------------------------|
+| Web Application + API (Selected) | Cloud Run service         | Simple deployment model    | Basic user interface       |
+| Chatbot Integration              | Slack / Teams bots        | Integrated enterprise workflows | Limited UI control    |
+| Developer Platform UI            | Internal developer portal | Rich experience            | Higher development effort  |
 
 ## Rationale
 
-  ------------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ -----------------------------------------
-  Simplicity                     Minimal UI required for prototype
-
-  Flexibility                    API can be reused by other applications
-
-  Deployment speed               Easily deployed using Cloud Run
-  ------------------------------------------------------------------------
+| Decision Factor | Explanation                               |
+|-----------------|-------------------------------------------|
+| Simplicity      | Minimal UI required for prototype         |
+| Flexibility     | API can be reused by other applications   |
+| Deployment speed| Easily deployed using Cloud Run           |
 
 # Cost Considerations
 
@@ -670,49 +619,32 @@ Responsibilities include:
 
 This section identifies the primary cost drivers of the prototype and the main optimization levers.
 
-  ------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Layer**                   **Primary Cost Driver**               **Cost Risk**   **Optimization Strategy**
-  --------------------------- ------------------------------------- --------------- --------------------------------------------------------------------
-  Application Layer           Request volume                        Low             Use Cloud Run autoscaling and request-based compute
-
-  AI Orchestration Layer      Processing per request                Low             Keep orchestration logic lightweight
-
-  Model Serving / Inference   Token usage and model choice          High            Use smaller models where appropriate, caching, prompt optimization
-
-  Retrieval / Vector DB       Index size and query volume           Medium          Tune chunking strategy and embedding dimensions
-
-  Data Platform               Storage and embedding generation      Medium          Batch ingestion and lifecycle management
-
-  Infrastructure Layer        Network egress and managed services   Medium          Keep services within the same cloud region
-  ------------------------------------------------------------------------------------------------------------------------------------------------------
+| Layer                     | Primary Cost Driver              | Cost Risk | Optimization Strategy                                         |
+|---------------------------|----------------------------------|-----------|---------------------------------------------------------------|
+| Application Layer         | Request volume                   | Low       | Use Cloud Run autoscaling and request-based compute           |
+| AI Orchestration Layer    | Processing per request           | Low       | Keep orchestration logic lightweight                          |
+| Model Serving / Inference | Token usage and model choice     | High      | Use smaller models, caching, prompt optimization              |
+| Retrieval / Vector DB     | Index size and query volume      | Medium    | Tune chunking strategy and embedding dimensions               |
+| Data Platform             | Storage and embedding generation | Medium    | Batch ingestion and lifecycle management                      |
+| Infrastructure Layer      | Network egress and managed services | Medium | Keep services within the same cloud region                    |
 
 ## Cost Optimization Principles
 
-  ------------------------------------------------------------------------------------------------------------
-  **Principle**                  **Description**
-  ------------------------------ -----------------------------------------------------------------------------
-  Start managed                  Reduce time-to-value and avoid early infrastructure overhead
-
-  Optimize inference first       Inference is usually the largest cost center in GenAI systems
-
-  Right-size retrieval           Poor chunking and oversized indexes increase cost without improving quality
-
-  Measure before optimizing      Track usage patterns before introducing self-hosted infrastructure
-
-  Delay GPU ownership            Managed APIs are more cost-effective during the prototype phase
-  ------------------------------------------------------------------------------------------------------------
+| Principle                | Description                                                                 |
+|--------------------------|-----------------------------------------------------------------------------|
+| Start managed            | Reduce time-to-value and avoid early infrastructure overhead                |
+| Optimize inference first | Inference is usually the largest cost center in GenAI systems               |
+| Right-size retrieval     | Poor chunking and oversized indexes increase cost without improving quality |
+| Measure before optimizing| Track usage patterns before introducing self-hosted infrastructure          |
+| Delay GPU ownership      | Managed APIs are more cost-effective during the prototype phase             |
 
 ## Rationale
 
-  ---------------------------------------------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ --------------------------------------------------------------------------
-  Prototype economics            Managed services reduce upfront engineering cost
-
-  Fast iteration                 Focus on architecture validation instead of platform tuning
-
-  Visibility                     Cost can be attributed by layer and used later in architecture decisions
-  ---------------------------------------------------------------------------------------------------------
+| Decision Factor     | Explanation                                                                 |
+|--------------------|-----------------------------------------------------------------------------|
+| Prototype economics| Managed services reduce upfront engineering cost                            |
+| Fast iteration     | Focus on architecture validation instead of platform tuning                 |
+| Visibility         | Cost can be attributed by layer and used later in architecture decisions    |
 
 # Security and AI Governance
 
@@ -720,57 +652,36 @@ This section identifies the primary cost drivers of the prototype and the main o
 
 This section outlines the core security and governance considerations for the prototype, especially for enterprise-style AI systems handling internal knowledge.
 
-  -------------------------------------------------------------------------------------------------------------------------------------------------
-  **Risk Area**         **Example Risk**                                   **Mitigation Strategy**
-  --------------------- -------------------------------------------------- ------------------------------------------------------------------------
-  Prompt injection      Malicious content manipulates model behavior       Input filtering, prompt isolation, retrieval controls
-
-  Data leakage          Sensitive documents exposed in responses           Access control, document classification, response filtering
-
-  PII exposure          Personal data appears in retrieved context         Data minimization, redaction, document tagging
-
-  Unauthorized access   Users query documents outside their access scope   IAM, service identity, authorization checks
-
-  Hallucinations        Model generates unsupported answers                Retrieval grounding, answer citation, evaluation pipeline
-
-  Abuse / misuse        Excessive or unsafe usage patterns                 Logging, rate limiting, auditability
-
-  Unsafe tool usage     Agentic workflow attempts unsupported actions      Tool allowlist, read-only initial tools, explicit approval checkpoints
-  -------------------------------------------------------------------------------------------------------------------------------------------------
+| Risk Area           | Example Risk                                         | Mitigation Strategy                                                         |
+|--------------------|------------------------------------------------------|------------------------------------------------------------------------------|
+| Prompt injection   | Malicious content manipulates model behavior          | Input filtering, prompt isolation, retrieval controls                        |
+| Data leakage       | Sensitive documents exposed in responses              | Access control, document classification, response filtering                  |
+| PII exposure       | Personal data appears in retrieved context            | Data minimization, redaction, document tagging                               |
+| Unauthorized access| Users query documents outside their access scope      | IAM, service identity, authorization checks                                  |
+| Hallucinations     | Model generates unsupported answers                   | Retrieval grounding, answer citation, evaluation pipeline                    |
+| Abuse / misuse     | Excessive or unsafe usage patterns                    | Logging, rate limiting, auditability                                         |
+| Unsafe tool usage  | Agentic workflow attempts unsupported actions         | Tool allowlist, read-only initial tools, explicit approval checkpoints       |
 
 ## Governance Controls
 
-  ---------------------------------------------------------------------------------------------------------------------
-  **Control Area**     **Prototype Approach**                    **Future Production Evolution**
-  -------------------- ----------------------------------------- ------------------------------------------------------
-  Identity             Cloud-native IAM and service accounts     Fine-grained RBAC and document-level authorization
-
-  Secrets              Managed secret storage                    Centralized enterprise secrets management
-
-  Auditability         Cloud logs and request tracing            Full prompt/response audit trails
-
-  Data handling        Controlled document set                   Data classification and policy enforcement
-
-  Model risk           Manual evaluation                         Automated evaluation and guardrails
-
-  Tool permissions     Small approved tool registry              Policy-driven tool authorization and action controls
-
-  Approval flow        Human confirmation for proposed actions   Role-based approval workflows and action governance
-  ---------------------------------------------------------------------------------------------------------------------
+| Control Area     | Prototype Approach                          | Future Production Evolution                          |
+|------------------|---------------------------------------------|-----------------------------------------------------|
+| Identity         | Cloud-native IAM and service accounts       | Fine-grained RBAC and document-level authorization   |
+| Secrets          | Managed secret storage                      | Centralized enterprise secrets management            |
+| Auditability     | Cloud logs and request tracing              | Full prompt/response audit trails                    |
+| Data handling    | Controlled document set                     | Data classification and policy enforcement           |
+| Model risk       | Manual evaluation                           | Automated evaluation and guardrails                  |
+| Tool permissions | Small approved tool registry                | Policy-driven tool authorization and action controls |
+| Approval flow    | Human confirmation for proposed actions     | Role-based approval workflows and action governance  |
 
 ## Rationale
 
-  ------------------------------------------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ -----------------------------------------------------------------------
-  Enterprise relevance           Security and governance are essential for credible AI platform design
-
-  Leadership signal              Demonstrates platform thinking beyond simple prototypes
-
-  Scalability                    Early governance patterns make future productionization easier
-
-  Agentic readiness              Bounded tool permissions create a safe path toward agentic evolution
-  ------------------------------------------------------------------------------------------------------
+| Decision Factor     | Explanation                                                                 |
+|--------------------|-----------------------------------------------------------------------------|
+| Enterprise relevance| Security and governance are essential for credible AI platform design       |
+| Leadership signal  | Demonstrates platform thinking beyond simple prototypes                     |
+| Scalability        | Early governance patterns make future productionization easier              |
+| Agentic readiness  | Bounded tool permissions create a safe path toward agentic evolution        |
 
 #  
 
@@ -800,13 +711,10 @@ The following diagram separates the platform into control plane and data plane r
 
 **Why This Distinction Matters**
 
-  --------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Plane**                      **Responsibility**
-  ------------------------------ -------------------------------------------------------------------------------------------------------------------------
-  Control Plane                  Decides how requests are handled, which models are used, how policies are applied, and how system behavior is monitored
-
-  Data Plane                     Executes the actual work of retrieval, inference, embedding generation, and data access
-  --------------------------------------------------------------------------------------------------------------------------------------------------------
+| Plane         | Responsibility                                                                                                      |
+|---------------|----------------------------------------------------------------------------------------------------------------------|
+| Control Plane | Decides how requests are handled, which models are used, how policies are applied, and how system behavior is monitored |
+| Data Plane    | Executes the actual work of retrieval, inference, embedding generation, and data access                             |
 
 # Evaluation Layer (optional for v1)
 
@@ -816,49 +724,32 @@ The evaluation layer measures the quality, safety, and accuracy of responses gen
 
 ## Evaluation Methods
 
-  --------------------------------------------------------------------------------------------------------------
-  **Method**             **Description**                                     **Example Use**
-  ---------------------- --------------------------------------------------- -----------------------------------
-  Human evaluation       Manual review of responses                          Early prototype validation
-
-  LLM-based evaluation   Models score responses automatically                Response quality checks
-
-  Benchmark datasets     Predefined test queries                             Regression testing
-
-  Retrieval evaluation   Measure relevance of retrieved documents            RAG tuning
-
-  Tool-use evaluation    Measure correctness of tool selection and outputs   Basic agentic workflow validation
-  --------------------------------------------------------------------------------------------------------------
+ | Method                | Description                                   | Example Use                         |
+|-----------------------|-----------------------------------------------|-------------------------------------|
+| Human evaluation      | Manual review of responses                    | Early prototype validation           |
+| LLM-based evaluation  | Models score responses automatically          | Response quality checks              |
+| Benchmark datasets    | Predefined test queries                       | Regression testing                   |
+| Retrieval evaluation  | Measure relevance of retrieved documents      | RAG tuning                           |
+| Tool-use evaluation   | Measure correctness of tool selection and outputs | Basic agentic workflow validation |
 
 ## Example Evaluation Metrics
 
-  ----------------------------------------------------------------------------------------------------
-  **Metric**                     **Purpose**
-  ------------------------------ ---------------------------------------------------------------------
-  Answer accuracy                Measures correctness of responses
-
-  Retrieval relevance            Determines if correct documents are retrieved
-
-  Hallucination rate             Tracks unsupported claims
-
-  Latency                        Measures user experience
-
-  Tool invocation accuracy       Measures whether the right tool was selected
-
-  Workflow success rate          Measures whether bounded multi-step workflows reach useful outcomes
-  ----------------------------------------------------------------------------------------------------
+| Metric                   | Purpose                                                     |
+|--------------------------|-------------------------------------------------------------|
+| Answer accuracy          | Measures correctness of responses                           |
+| Retrieval relevance      | Determines if correct documents are retrieved               |
+| Hallucination rate       | Tracks unsupported claims                                   |
+| Latency                  | Measures user experience                                    |
+| Tool invocation accuracy | Measures whether the right tool was selected                |
+| Workflow success rate    | Measures whether bounded multi-step workflows reach useful outcomes |
 
 ## Technology Options
 
-  -------------------------------------------------------------------------
-  **Tool**             **Category**         **Purpose**
-  -------------------- -------------------- -------------------------------
-  LangSmith            LLM observability    Prompt tracing and evaluation
-
-  Arize                Model monitoring     Performance monitoring
-
-  WhyLabs              Data monitoring      Detect drift and anomalies
-  -------------------------------------------------------------------------
+| Tool      | Category           | Purpose                          |
+|-----------|--------------------|----------------------------------|
+| LangSmith | LLM observability  | Prompt tracing and evaluation    |
+| Arize     | Model monitoring   | Performance monitoring           |
+| WhyLabs   | Data monitoring    | Detect drift and anomalies       |
 
 # Implementation Roadmap
 
@@ -952,21 +843,14 @@ The design is not tied to a single model, a single retrieval implementation, or 
 
 ## Why the Current Architecture Can Evolve
 
-  --------------------------------------------------------------------------------------------------------------------------------
-  **Architectural Characteristic**     **Why It Supports Future Evolution**
-  ------------------------------------ -------------------------------------------------------------------------------------------
-  Layered design                       Allows new capabilities to be added without redesigning the entire system
-
-  Explicit orchestration layer         Provides a place to introduce agent workflows, tool invocation, and multi-step reasoning
-
-  Model gateway layer                  Enables multi-model routing, fallback logic, and future policy enforcement
-
-  Managed model APIs                   Makes it easy to compare and swap model providers
-
-  Retrieval layer abstraction          Supports future expansion from simple vector retrieval to hybrid or graph-based retrieval
-
-  Evaluation and governance sections   Provide a path to production-grade controls as capabilities expand
-  --------------------------------------------------------------------------------------------------------------------------------
+| Architectural Characteristic   | Why It Supports Future Evolution                                                                 |
+|--------------------------------|--------------------------------------------------------------------------------------------------|
+| Layered design                 | Allows new capabilities to be added without redesigning the entire system                        |
+| Explicit orchestration layer   | Provides a place to introduce agent workflows, tool invocation, and multi-step reasoning        |
+| Model gateway layer            | Enables multi-model routing, fallback logic, and future policy enforcement                      |
+| Managed model APIs             | Makes it easy to compare and swap model providers                                                |
+| Retrieval layer abstraction    | Supports future expansion from simple vector retrieval to hybrid or graph-based retrieval       |
+| Evaluation and governance sections | Provide a path to production-grade controls as capabilities expand                         |
 
 ## Support for Agentic Architectures
 
@@ -974,53 +858,34 @@ One of the most important future architectural developments is the move from sin
 
 This architecture can support agentic evolution because the key prerequisites already exist:
 
-  -------------------------------------------------------------------------------------------------------
-  **Existing Layer**              **Agentic Relevance**
-  ------------------------------- -----------------------------------------------------------------------
-  AI Orchestration Layer          Can coordinate multi-step planning and execution
-
-  Model Gateway / Routing Layer   Can choose models optimized for planning, acting, or summarization
-
-  Retrieval Layer                 Provides context grounding for agents
-
-  Application Layer               Can expose task-oriented workflows rather than only chat interactions
-
-  Evaluation Layer                Can measure success of multi-step workflows
-
-  Security / Governance Layer     Can limit unsafe or unauthorized tool usage
-  -------------------------------------------------------------------------------------------------------
+| Existing Layer               | Agentic Relevance                                                     |
+|------------------------------|------------------------------------------------------------------------|
+| AI Orchestration Layer       | Can coordinate multi-step planning and execution                      |
+| Model Gateway / Routing Layer| Can choose models optimized for planning, acting, or summarization    |
+| Retrieval Layer              | Provides context grounding for agents                                 |
+| Application Layer            | Can expose task-oriented workflows rather than only chat interactions |
+| Evaluation Layer             | Can measure success of multi-step workflows                           |
+| Security / Governance Layer  | Can limit unsafe or unauthorized tool usage                           |
 
 ## Agentic Capabilities That Could Be Added
 
-  ------------------------------------------------------------------------------------------
-  **Agentic Capability**         **How It Fits the Architecture**
-  ------------------------------ -----------------------------------------------------------
-  Multi-step reasoning           Implemented within the orchestration layer
-
-  Tool use                       Added as callable tools managed by orchestration
-
-  Planner / executor patterns    Added as orchestration sub-components
-
-  Multi-agent collaboration      Introduced as additional orchestration modules
-
-  Human-in-the-loop approval     Exposed through the application and governance layers
-
-  Autonomous remediation         Added cautiously with policy checks and approval controls
-  ------------------------------------------------------------------------------------------
+| Agentic Capability        | How It Fits the Architecture                                      |
+|---------------------------|-------------------------------------------------------------------|
+| Multi-step reasoning      | Implemented within the orchestration layer                        |
+| Tool use                  | Added as callable tools managed by orchestration                  |
+| Planner / executor patterns | Added as orchestration sub-components                          |
+| Multi-agent collaboration | Introduced as additional orchestration modules                    |
+| Human-in-the-loop approval| Exposed through the application and governance layers             |
+| Autonomous remediation    | Added cautiously with policy checks and approval controls         |
 
 ## Example Agentic Evolution Path
 
-  --------------------------------------------------------------------------------------------------------------
-  **Phase**                      **Evolution**
-  ------------------------------ -------------------------------------------------------------------------------
-  Current state                  Retrieve context, use bounded tools when needed, and generate grounded answer
-
-  Next step                      Retrieve context and invoke tools for additional data
-
-  Later step                     Plan and execute multi-step workflows
-
-  Advanced state                 Coordinate multiple specialized agents with governance controls
-  --------------------------------------------------------------------------------------------------------------
+| Phase          | Evolution                                                                 |
+|----------------|---------------------------------------------------------------------------|
+| Current state  | Retrieve context, use bounded tools when needed, and generate grounded answer |
+| Next step      | Retrieve context and invoke tools for additional data                     |
+| Later step     | Plan and execute multi-step workflows                                     |
+| Advanced state | Coordinate multiple specialized agents with governance controls           |
 
 This means the architecture can evolve from RAG assistant → tool-using copilot → agentic workflow system without changing its basic structure.
 
@@ -1044,17 +909,12 @@ Future AI platforms will rarely rely on a single model. Different models may be 
 
 The current Model Gateway / Routing Layer is already designed for this.
 
-  -------------------------------------------------------------------
-  **Future Development**         **Current Architectural Support**
-  ------------------------------ ------------------------------------
-  Best-model selection           Model gateway and routing policies
-
-  Fallback models                Gateway retry and failover logic
-
-  Cost-aware routing             Gateway policy rules
-
-  Specialized domain models      Routing logic and orchestration
-  -------------------------------------------------------------------
+| Future Development        | Current Architectural Support        |
+|---------------------------|-------------------------------------|
+| Best-model selection      | Model gateway and routing policies  |
+| Fallback models           | Gateway retry and failover logic    |
+| Cost-aware routing        | Gateway policy rules                |
+| Specialized domain models | Routing logic and orchestration     |
 
 ### Hybrid Retrieval
 
@@ -1080,15 +940,11 @@ As workloads grow, platforms often move from managed APIs toward self-hosted inf
 
 The current architecture can support that transition because the Model Serving Layer is already abstracted from the application and orchestration layers.
 
-  ------------------------------------------------------------------
-  **Deployment Mode**            **Architectural Impact**
-  ------------------------------ -----------------------------------
-  Managed model APIs             Current selected approach
-
-  Self-hosted inference          Change inside Model Serving Layer
-
-  Hybrid inference               Coordinated through Model Gateway
-  ------------------------------------------------------------------
+| Deployment Mode        | Architectural Impact                     |
+|------------------------|------------------------------------------|
+| Managed model APIs     | Current selected approach                |
+| Self-hosted inference  | Change inside Model Serving Layer        |
+| Hybrid inference       | Coordinated through Model Gateway        |
 
 This means the platform can adopt:
 
@@ -1150,21 +1006,14 @@ This is enabled by the existing combination of:
 
 Although the architecture is future-ready, some layers would need to become more sophisticated as the platform matures.
 
-  ------------------------------------------------------------------------------------------------------
-  **Layer**                      **Likely Future Change**
-  ------------------------------ -----------------------------------------------------------------------
-  Application Layer              Move from simple chat/API to workflow-oriented interfaces
-
-  Orchestration Layer            Add planners, tool registries, memory, and agent coordination
-
-  Model Gateway                  Add richer routing, quotas, safety policies, and provider abstraction
-
-  Retrieval Layer                Support hybrid retrieval, graph retrieval, and session memory
-
-  Evaluation Layer               Add automated scoring and continuous regression pipelines
-
-  Governance Layer               Add approvals, action boundaries, and stronger auditability
-  ------------------------------------------------------------------------------------------------------
+| Layer                | Likely Future Change                                                      |
+|----------------------|---------------------------------------------------------------------------|
+| Application Layer    | Move from simple chat/API to workflow-oriented interfaces                 |
+| Orchestration Layer  | Add planners, tool registries, memory, and agent coordination             |
+| Model Gateway        | Add richer routing, quotas, safety policies, and provider abstraction     |
+| Retrieval Layer      | Support hybrid retrieval, graph retrieval, and session memory             |
+| Evaluation Layer     | Add automated scoring and continuous regression pipelines                 |
+| Governance Layer     | Add approvals, action boundaries, and stronger auditability               |
 
 These are evolutionary changes, not signs that the current architecture is incorrect.
 
@@ -1174,19 +1023,13 @@ The current reference architecture is future-proof in structure, but not yet fut
 
 Current limitations include:
 
-  ------------------------------------------------------------------------------------------------
-  **Limitation**                 **Why It Matters**
-  ------------------------------ -----------------------------------------------------------------
-  Lightweight orchestration      Sufficient for prototype, but not full agent runtime
-
-  Managed model APIs only        Limits learning about deep inference infrastructure
-
-  Vector retrieval focus         Does not yet include broader memory or graph retrieval patterns
-
-  Basic observability            Needs richer tracing for complex agent workflows
-
-  No tool registry yet           Tool invocation patterns would need to be added
-  ------------------------------------------------------------------------------------------------
+| Limitation                | Why It Matters                                                      |
+|----------------------------|----------------------------------------------------------------------|
+| Lightweight orchestration  | Sufficient for prototype, but not full agent runtime                |
+| Managed model APIs only    | Limits learning about deep inference infrastructure                 |
+| Vector retrieval focus     | Does not yet include broader memory or graph retrieval patterns     |
+| Basic observability        | Needs richer tracing for complex agent workflows                    |
+| No tool registry yet       | Tool invocation patterns would need to be added                     |
 
 These limitations are acceptable for a prototype because the goal is to create a stable architectural base that can evolve later.
 
@@ -1200,35 +1043,24 @@ This section describes how the prototype architecture could evolve into a produc
 
 **Goal**: Understand architecture patterns and validate use cases.
 
-  -------------------------------------------------------------------------------------------------------------
-  **Characteristic**             **Implementation**
-  ------------------------------ ------------------------------------------------------------------------------
-  Models                         Managed APIs (Vertex AI, OpenAI, Anthropic)
-
-  Retrieval                      Managed vector database
-
-  Orchestration                  Lightweight Python service with bounded tool use and planner / executor flow
-
-  Evaluation                     Manual testing
-  -------------------------------------------------------------------------------------------------------------
+| Characteristic  | Implementation                                                                 |
+|------------------|---------------------------------------------------------------------------------|
+| Models           | Managed APIs (Vertex AI, OpenAI, Anthropic)                                    |
+| Retrieval        | Managed vector database                                                         |
+| Orchestration    | Lightweight Python service with bounded tool use and planner / executor flow   |
+| Evaluation       | Manual testing                                                                  |
 
 ### Phase 2 --- Production AI Application
 
 **Focus**: reliability and operational maturity.
 
 **Goal**: Operate a stable AI application serving real users.
-
-  ---------------------------------------------------------------
-  **Capability**                 **Evolution**
-  ------------------------------ --------------------------------
-  Evaluation                     Automated evaluation pipelines
-
-  Observability                  Prompt tracing and monitoring
-
-  Security                       Fine-grained access control
-
-  Scaling                        Traffic-based autoscaling
-  ---------------------------------------------------------------
+| Capability    | Evolution                          |
+|---------------|------------------------------------|
+| Evaluation    | Automated evaluation pipelines     |
+| Observability | Prompt tracing and monitoring      |
+| Security      | Fine-grained access control        |
+| Scaling       | Traffic-based autoscaling          |
 
 ### Phase 3 --- AI Platform
 
@@ -1236,47 +1068,35 @@ This section describes how the prototype architecture could evolve into a produc
 
 **Goal**: Transform the system from a single AI application into a reusable enterprise AI platform.
 
-  --------------------------------------------------------------------
-  **Platform Capability**           **Description**
-  --------------------------------- ----------------------------------
-  Model registry                    Manage multiple model versions
-
-  Multi-model routing               Select models dynamically
-
-  Shared retrieval infrastructure   Centralized knowledge systems
-
-  Evaluation platform               Continuous model benchmarking
-
-  Governance framework              Enterprise AI policy enforcement
-  --------------------------------------------------------------------
+| Platform Capability           | Description                          |
+|--------------------------------|--------------------------------------|
+| Model registry                 | Manage multiple model versions       |
+| Multi-model routing            | Select models dynamically            |
+| Shared retrieval infrastructure| Centralized knowledge systems        |
+| Evaluation platform            | Continuous model benchmarking        |
+| Governance framework           | Enterprise AI policy enforcement     |
 
 # Key Architectural Insights
 
-  ----------------------------------------------------------------------------------------------------
-  **Insight**                                         **Explanation**
-  --------------------------------------------------- ------------------------------------------------
-  AI systems resemble distributed cloud platforms     Similar architecture patterns to microservices
-
-  Vector databases are core infrastructure            Enable semantic retrieval for LLMs
-
-  Model inference introduces GPU scaling challenges   Requires specialized infrastructure
-
-  Orchestration becomes the control plane             Determines how AI applications behave
-
-  Observability is essential                          AI responses must be monitored and evaluated
-  ----------------------------------------------------------------------------------------------------
+| Insight                                      | Explanation                                   |
+|----------------------------------------------|-----------------------------------------------|
+| AI systems resemble distributed cloud platforms | Similar architecture patterns to microservices |
+| Vector databases are core infrastructure     | Enable semantic retrieval for LLMs             |
+| Model inference introduces GPU scaling challenges | Requires specialized infrastructure        |
+| Orchestration becomes the control plane      | Determines how AI applications behave          |
+| Observability is essential                   | AI responses must be monitored and evaluated   |
 
 # Additional Architectural Design Principles
 
 The following design principles further guide how this architecture should evolve as the prototype is implemented and potentially expanded into a production platform.
 
-  **Design Principle**       **Description**                                                                                     **Architectural Impact**
-  -------------------------- --------------------------------------------------------------------------------------------------- ---------------------------------------------------------------------------------------
-  Platform‑First Thinking    Design infrastructure that supports multiple AI applications                                        Avoid hard‑coding workflows for a single use case
-  Loose Coupling             Each layer should interact through well‑defined interfaces                                          Allows replacing models, retrieval engines, or orchestration frameworks independently
-  Observability by Default   Logging, tracing, and evaluation should be built into the platform from the beginning               Enables debugging and model quality tracking
-  Security by Design         Access control and governance controls should be embedded in architecture rather than added later   Prevents data leakage and unsafe model usage
-  Incremental Evolution      The system should evolve gradually from prototype → production → platform                           Reduces architectural rework and risk
+| Design Principle        | Description                                                                                     | Architectural Impact                                                                 |
+|------------------------|-------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| Platform-First Thinking| Design infrastructure that supports multiple AI applications                                    | Avoid hard-coding workflows for a single use case                                   |
+| Loose Coupling         | Each layer should interact through well-defined interfaces                                      | Allows replacing models, retrieval engines, or orchestration frameworks independently |
+| Observability by Default | Logging, tracing, and evaluation should be built into the platform from the beginning        | Enables debugging and model quality tracking                                         |
+| Security by Design     | Access control and governance controls should be embedded in architecture rather than added later | Prevents data leakage and unsafe model usage                                         |
+| Incremental Evolution  | The system should evolve gradually from prototype → production → platform                       | Reduces architectural rework and risk                                                |
 
 These principles mirror patterns used in modern cloud platform design and are especially important for AI systems that integrate multiple rapidly evolving technologies.
 
@@ -1284,19 +1104,13 @@ These principles mirror patterns used in modern cloud platform design and are es
 
 This reference architecture is intentionally designed not only as a blueprint for a prototype AI system but also as a learning platform for understanding modern AI infrastructure.
 
-  ------------------------
-  **Learning Dimension**
-  ------------------------
-  Cloud infrastructure
-
-  Knowledge systems
-
-  LLM integration
-
-  Workflow design
-
-  Platform thinking
-  ------------------------
+| Learning Dimension     |
+|------------------------|
+| Cloud infrastructure   |
+| Knowledge systems      |
+| LLM integration        |
+| Workflow design        |
+| Platform thinking      |
 
 By exploring each layer individually, engineers can gain a deeper understanding of how modern AI systems are designed and operated.
 
@@ -1310,59 +1124,38 @@ By separating orchestration, model routing, retrieval, inference, and governance
 
 # Appendix A. Technologies to Explore
 
-  -----------------------------------------------------------------------------------------------------------------------------------------------------
-  **Layer**                    **Technologies to Explore**                                     **Learning Goal**
-  ---------------------------- --------------------------------------------------------------- --------------------------------------------------------
-  Application Layer            Cloud Run, simple web UI, API service                           Understand how AI apps are exposed to users
-
-  AI Orchestration Layer       Custom Python service, LangChain, LlamaIndex                    Compare manual RAG orchestration vs frameworks
-
-  Agent Patterns               CrewAI, AutoGPT                                                 Explore multi-step reasoning and tool use
-
-  Model Gateway / Routing      LiteLLM-style routing patterns, fallback logic, policy checks   Understand multi-model control and abstraction
-
-  Model Serving                Vertex AI, OpenAI, Anthropic                                    Compare model capabilities, latency and cost
-
-  Retrieval Layer              Vertex AI Vector Search, hybrid retrieval patterns              Learn semantic search and relevance tradeoffs
-
-  Evaluation / Observability   LangSmith, Arize, WhyLabs                                       Understand evaluation, tracing and AI monitoring
-
-  Infrastructure Layer         GCP, GKE concepts, GPU cloud awareness                          Learn how AI services map onto platform infrastructure
-  -----------------------------------------------------------------------------------------------------------------------------------------------------
+| Layer                      | Technologies to Explore                                      | Learning Goal                                                  |
+|----------------------------|-------------------------------------------------------------|----------------------------------------------------------------|
+| Application Layer          | Cloud Run, simple web UI, API service                       | Understand how AI apps are exposed to users                   |
+| AI Orchestration Layer     | Custom Python service, LangChain, LlamaIndex                | Compare manual RAG orchestration vs frameworks                |
+| Agent Patterns             | CrewAI, AutoGPT                                             | Explore multi-step reasoning and tool use                     |
+| Model Gateway / Routing    | LiteLLM-style routing patterns, fallback logic, policy checks | Understand multi-model control and abstraction                |
+| Model Serving              | Vertex AI, OpenAI, Anthropic                                | Compare model capabilities, latency and cost                  |
+| Retrieval Layer            | Vertex AI Vector Search, hybrid retrieval patterns          | Learn semantic search and relevance tradeoffs                 |
+| Evaluation / Observability | LangSmith, Arize, WhyLabs                                   | Understand evaluation, tracing and AI monitoring              |
+| Infrastructure Layer       | GCP, GKE concepts, GPU cloud awareness                      | Learn how AI services map onto platform infrastructure        |
 
 # Appendix B. Developer Tooling
 
 The following tools support development of the platform but are not part of the runtime architecture. They accelerate implementation, experimentation, and iteration while the deployed system runs on GCP.
 
-  -----------------------------------------------------------------------------------------------------------------------------------------
-  **Tool Category**     **Selected Tools**                **Purpose**
-  --------------------- --------------------------------- ---------------------------------------------------------------------------------
-  AI Coding Assistant   Claude Code, GitHub Copilot       Accelerate coding, refactoring, and experimentation during platform development
-
-  IDE                   VS Code or Cursor                 Primary development environment
-
-  Version Control       Git + GitHub                      Source control and collaboration
-
-  Containerization      Docker                            Package services for Cloud Run deployment
-
-  Local Testing         Python virtual environment / uv   Dependency management and local testing
-
-  Diagramming           Mermaid, draw.io                  Architecture diagrams and documentation
-  -----------------------------------------------------------------------------------------------------------------------------------------
+| Tool Category        | Selected Tools              | Purpose                                                                                 |
+|----------------------|-----------------------------|-----------------------------------------------------------------------------------------|
+| AI Coding Assistant  | Claude Code, GitHub Copilot | Accelerate coding, refactoring, and experimentation during platform development         |
+| IDE                  | VS Code or Cursor           | Primary development environment                                                         |
+| Version Control      | Git + GitHub                | Source control and collaboration                                                        |
+| Containerization     | Docker                      | Package services for Cloud Run deployment                                               |
+| Local Testing        | Python virtual environment / uv | Dependency management and local testing                                              |
+| Diagramming          | Mermaid, draw.io            | Architecture diagrams and documentation                                                 |
 
 ## Rationale
 
-  ----------------------------------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ ---------------------------------------------------------------
-  Development velocity           AI coding assistants significantly accelerate prototyping
-
-  Platform independence          Developer tools remain separate from the runtime architecture
-
-  Reproducibility                Git and containerization ensure reproducible deployments
-
-  Documentation clarity          Diagram tools support architecture communication
-  ----------------------------------------------------------------------------------------------
+| Decision Factor        | Explanation                                                      |
+|------------------------|------------------------------------------------------------------|
+| Development velocity   | AI coding assistants significantly accelerate prototyping        |
+| Platform independence | Developer tools remain separate from the runtime architecture    |
+| Reproducibility        | Git and containerization ensure reproducible deployments         |
+| Documentation clarity  | Diagram tools support architecture communication                 |
 
 These tools are part of the developer workflow, while the runtime architecture described earlier is deployed on GCP services such as Cloud Run, Vertex AI, Cloud Storage, and Vertex AI Vector Search.
 
@@ -1372,17 +1165,12 @@ Although this document focuses on a reference architecture, similar architectura
 
 ## Engineering and Platform Copilots
 
-  ----------------------------------------------------------------------------------------------------------------------------------------------
-  **Company**           **Product Pattern**             **Description**
-  --------------------- ------------------------------- ----------------------------------------------------------------------------------------
-  Datadog               AI Observability Assistant      Helps engineers investigate logs, metrics, and incidents using AI-powered explanations
-
-  PagerDuty             Incident Response Copilot       Assists engineers during outages using operational runbooks and incident data
-
-  Sourcegraph           Developer / Code Assistant      Helps developers understand codebases, systems, and engineering documentation
-
-  Backstage Ecosystem   Developer Platform Assistants   Provide internal developer platform guidance and documentation retrieval
-  ----------------------------------------------------------------------------------------------------------------------------------------------
+| Company              | Product Pattern               | Description                                                                                  |
+|----------------------|-------------------------------|----------------------------------------------------------------------------------------------|
+| Datadog              | AI Observability Assistant    | Helps engineers investigate logs, metrics, and incidents using AI-powered explanations       |
+| PagerDuty            | Incident Response Copilot     | Assists engineers during outages using operational runbooks and incident data                |
+| Sourcegraph          | Developer / Code Assistant    | Helps developers understand codebases, systems, and engineering documentation                |
+| Backstage Ecosystem  | Developer Platform Assistants | Provide internal developer platform guidance and documentation retrieval                     |
 
 These systems typically combine:
 
@@ -1396,29 +1184,20 @@ These systems typically combine:
 
 ## Enterprise Knowledge Assistants
 
-  -------------------------------------------------------------------------------------------------------------------------------
-  **Company**          **Product Pattern**              **Description**
-  -------------------- -------------------------------- -------------------------------------------------------------------------
-  Glean                Enterprise Knowledge Assistant   Retrieves and synthesizes information from internal enterprise systems
-
-  Notion               Workspace Knowledge Assistant    Answers questions across internal documentation and knowledge bases
-
-  Atlassian            AI for Jira / Confluence         Retrieves project documentation and summarizes organizational knowledge
-  -------------------------------------------------------------------------------------------------------------------------------
+| Company   | Product Pattern               | Description                                                                 |
+|-----------|-------------------------------|-----------------------------------------------------------------------------|
+| Glean     | Enterprise Knowledge Assistant | Retrieves and synthesizes information from internal enterprise systems     |
+| Notion    | Workspace Knowledge Assistant  | Answers questions across internal documentation and knowledge bases        |
+| Atlassian | AI for Jira / Confluence       | Retrieves project documentation and summarizes organizational knowledge    |
 
 These applications primarily rely on RAG architectures over internal knowledge bases.
 
 ## Customer Support AI
-
-  -------------------------------------------------------------------------------------------------------------------------
-  **Company**          **Product Pattern**     **Description**
-  -------------------- ----------------------- ----------------------------------------------------------------------------
-  Intercom             AI Support Assistant    Automates responses using product documentation and customer conversations
-
-  Zendesk              AI Support Automation   Uses knowledge bases and ticket history to generate support responses
-
-  Salesforce           AI Service Agents       AI assistants integrated into enterprise customer service workflows
-  -------------------------------------------------------------------------------------------------------------------------
+| Company    | Product Pattern         | Description                                                                 |
+|------------|--------------------------|-----------------------------------------------------------------------------|
+| Intercom   | AI Support Assistant     | Automates responses using product documentation and customer conversations |
+| Zendesk    | AI Support Automation    | Uses knowledge bases and ticket history to generate support responses      |
+| Salesforce | AI Service Agents        | AI assistants integrated into enterprise customer service workflows        |
 
 These systems combine:
 
@@ -1430,32 +1209,22 @@ These systems combine:
 
 ## Research and Technical Assistants
 
-  ------------------------------------------------------------------------------------------------------------------------------
-  **Company**          **Product Pattern**                 **Description**
-  -------------------- ----------------------------------- ---------------------------------------------------------------------
-  Perplexity           AI Research Assistant               Retrieves information from external sources and synthesizes answers
-
-  OpenAI               Knowledge Assistants and Copilots   AI assistants built around retrieval and reasoning over documents
-
-  Anthropic            Claude Enterprise Assistants        AI assistants integrated into enterprise workflows
-  ------------------------------------------------------------------------------------------------------------------------------
+| Company    | Product Pattern                     | Description                                                                 |
+|------------|-------------------------------------|-----------------------------------------------------------------------------|
+| Perplexity | AI Research Assistant              | Retrieves information from external sources and synthesizes answers        |
+| OpenAI     | Knowledge Assistants and Copilots  | AI assistants built around retrieval and reasoning over documents          |
+| Anthropic  | Claude Enterprise Assistants       | AI assistants integrated into enterprise workflows                         |
 
 ## Why This Architecture Works Across Many Use Cases
 
 Despite differences in product experience, most AI-native systems share the same underlying architectural components:
 
-  ------------------------------------------------------------------------
-  **Common Pattern**             **Role in Architecture**
-  ------------------------------ -----------------------------------------
-  Retrieval                      Provides grounded knowledge context
-
-  Orchestration                  Coordinates prompts, tools, and models
-
-  Model inference                Generates responses or actions
-
-  Data platform                  Manages documents and knowledge sources
-
-  Infrastructure                 Provides scalable compute and storage
-  ------------------------------------------------------------------------
+| Common Pattern   | Role in Architecture                              |
+|------------------|---------------------------------------------------|
+| Retrieval        | Provides grounded knowledge context               |
+| Orchestration    | Coordinates prompts, tools, and models            |
+| Model inference  | Generates responses or actions                    |
+| Data platform    | Manages documents and knowledge sources           |
+| Infrastructure   | Provides scalable compute and storage             |
 
 Because these patterns appear across many industries, the AI Platform Reference Architecture can support a wide range of applications beyond any single product use case.
