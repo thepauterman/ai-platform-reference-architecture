@@ -273,25 +273,16 @@ Cloud Infrastructure (GCP)
 
 The platform is structured into seven logical architecture layers.
 
-  -------------------------------------------------------------------------------------
-  **Layer**                           **Responsibility**
-  ----------------------------------- -------------------------------------------------
-  Application Layer                   User interface and API access
-
-  Observability                       Logging, Monitoring
-
-  AI Orchestration Layer              RAG workflow orchestration
-
-  Model Gateway / Routing Layer       Model selection, policy enforcement and routing
-
-  Model Serving Layer                 LLM inference and response generation
-
-  Retrieval / Vector Database Layer   Semantic search and knowledge retrieval
-
-  Data Platform Layer                 Document ingestion and embedding pipelines
-
-  Infrastructure Layer                Cloud compute, storage, networking and security
-  -------------------------------------------------------------------------------------
+| Layer | Responsibility |
+|------|----------------|
+| Application Layer | User interface and API access |
+| Observability | Logging and monitoring |
+| AI Orchestration Layer | RAG workflow orchestration |
+| Model Gateway / Routing Layer | Model selection, policy enforcement, and routing |
+| Model Serving Layer | LLM inference and response generation |
+| Retrieval / Vector Database Layer | Semantic search and knowledge retrieval |
+| Data Platform Layer | Document ingestion and embedding pipelines |
+| Infrastructure Layer | Cloud compute, storage, networking, and security |
 
 Modern AI systems are increasingly designed as layered platforms rather than single applications. This architectural style mirrors patterns long used in distributed cloud platforms, where responsibilities are separated across layers such as application interfaces, control planes, data services, and infrastructure.
 
@@ -347,29 +338,20 @@ All higher layers of the AI platform depend on this layer.
 
 ## Platform Options
 
-  --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Platform**                           **Example Services**                       **Advantages**                           **Tradeoffs**
-  -------------------------------------- ------------------------------------------ ---------------------------------------- -----------------------------------------
-  **Google Cloud Platform (Selected)**   GKE, Cloud Run, Vertex AI, Cloud Storage   Strong ML ecosystem, Kubernetes native   Smaller enterprise footprint than Azure
-
-  Microsoft Azure                        Azure OpenAI, AKS, Azure ML                Enterprise AI adoption                   Less common in AI‑native startups
-
-  AI‑Native GPU Clouds                   CoreWeave, Lambda                          High‑performance AI workloads            Limited general cloud ecosystem
-  --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Platform | Example Services | Advantages | Tradeoffs |
+|---------|----------------|-----------|----------|
+| Google Cloud Platform (Selected) | GKE, Cloud Run, Vertex AI, Cloud Storage | Strong ML ecosystem, Kubernetes-native | Smaller enterprise footprint than Azure |
+| Microsoft Azure | Azure OpenAI, AKS, Azure ML | Strong enterprise adoption | Less common in AI-native startups |
+| AI-Native GPU Clouds | CoreWeave, Lambda | High-performance AI workloads | Limited general cloud ecosystem |
 
 ## Rationale
 
-  -----------------------------------------------------------------------------------------------
-  **Decision Factor**            **Explanation**
-  ------------------------------ ----------------------------------------------------------------
-  AI ecosystem maturity          GCP has strong native tooling for AI and ML workloads
-
-  Kubernetes leadership          GKE is widely used by AI startups and ML platforms
-
-  Startup ecosystem alignment    Many Silicon Valley AI companies operate on GCP infrastructure
-
-  Managed + custom flexibility   Supports both managed AI services and custom infrastructure
-  -----------------------------------------------------------------------------------------------
+| Decision Factor | Explanation |
+|----------------|------------|
+| AI ecosystem maturity | GCP has strong native tooling for AI and ML workloads |
+| Kubernetes leadership | GKE is widely used by AI startups and ML platforms |
+| Startup ecosystem alignment | Many Silicon Valley AI companies operate on GCP infrastructure |
+| Managed + custom flexibility | Supports both managed AI services and custom infrastructure |
 
 # Data Platform Layer
 
