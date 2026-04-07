@@ -1,4 +1,4 @@
-# AI Platform Reference Architecture
+# AI Platform Reference Architecture + AI Gateway implementation
 
 This repository contains both the reference architecture and the initial implementation of an AI Governance Gateway, which serves as the first executable component of the platform.
 
