@@ -1,8 +1,14 @@
 # AI Platform Reference Architecture
 
-This repository contains a reference architecture for designing and building a modern AI platform, focused on patterns such as Retrieval-Augmented Generation (RAG), orchestration, model routing, and observability.
+This repository contains both the reference architecture and the initial implementation of an AI Governance Gateway, which serves as the first executable component of the platform.
+
+The reference architecture use is to set a foundation to designing and building a modern AI platform, focused on patterns such as Retrieval-Augmented Generation (RAG), orchestration, model routing, and observability.
 
 The goal is to understand how AI systems evolve from simple applications into reusable, scalable platforms.
+
+docs/   → architecture and design artifacts
+app/    → gateway service implementation
+infra/  → Terraform infrastructure for GCP
 
 ---
 
