@@ -22,6 +22,8 @@ The goal is to understand how AI systems evolve from simple applications into re
 - [ ] Model integration (LLM provider)
 - [ ] Observability + logging
 
+---
+
 ## 🧠 Overview
 
 Modern AI systems are increasingly structured as **distributed platforms** rather than isolated applications.
