@@ -12,6 +12,16 @@ The goal is to understand how AI systems evolve from simple applications into re
 
 ---
 
+## 🛣️ Roadmap
+
+- [x] Reference architecture
+- [WIP] Terraform foundation (GCP APIs, project setup)
+- [ ] Gateway service (FastAPI baseline)
+- [ ] Containerization (Docker)
+- [ ] Cloud Run deployment
+- [ ] Model integration (LLM provider)
+- [ ] Observability + logging
+
 ## 🧠 Overview
 
 Modern AI systems are increasingly structured as **distributed platforms** rather than isolated applications.
