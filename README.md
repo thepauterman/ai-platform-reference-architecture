@@ -15,7 +15,7 @@ The goal is to understand how AI systems evolve from simple applications into re
 ## 🛣️ Roadmap
 
 - [x] Reference architecture
-- [ ] Terraform foundation (GCP APIs, project setup)
+- [x] Terraform foundation (GCP APIs, project setup)
 - [ ] Gateway service (FastAPI baseline)
 - [ ] Containerization (Docker)
 - [ ] Cloud Run deployment
