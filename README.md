@@ -6,9 +6,9 @@ The reference architecture use is to set a foundation to designing and building 
 
 The goal is to understand how AI systems evolve from simple applications into reusable, scalable platforms.
 
-docs/   → architecture and design artifacts
-app/    → gateway service implementation
-infra/  → Terraform infrastructure for GCP
+- docs/   → architecture and design artifacts
+- app/    → gateway service implementation
+- infra/  → Terraform infrastructure for GCP
 
 ---
 
