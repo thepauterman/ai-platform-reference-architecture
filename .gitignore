@@ -1,4 +1,3 @@
-# Python
 .venv/
 __pycache__/
 
@@ -10,6 +9,12 @@ __pycache__/
 *.tfstate
 *.tfstate.backup
 terraform.tfvars
+terraform.tfvars.json
+crash.log
+
+# Sensitive credentials
+terraform-sa.json
+*.auto.tfvars
 
 # OS
 .DS_Store
