@@ -14,3 +14,8 @@ variable "service_name" {
   type        = string
   default     = "ai-governance-gateway"
 }
+
+variable "billing_account_id" {
+  description = "GCP billing account ID"
+  type        = string
+}
