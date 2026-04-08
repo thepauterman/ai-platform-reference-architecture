@@ -34,7 +34,7 @@ resource "google_billing_budget" "monthly_budget" {
   amount {
     specified_amount {
       currency_code = "USD"
-      units         = "50"
+      units         = "15"
     }
   }
 
