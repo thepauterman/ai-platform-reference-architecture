@@ -15,12 +15,14 @@ The goal is to understand how AI systems evolve from simple applications into re
 ## 🛣️ Roadmap
 
 - [x] Reference architecture
-- [x] Terraform foundation (GCP APIs, project setup)
-- [ ] Gateway service (FastAPI baseline)
-- [ ] Containerization (Docker)
-- [ ] Cloud Run deployment
-- [ ] Model integration (LLM provider)
-- [ ] Observability + logging
+- [x] Dev setup (local run + config)
+- [x] Infra (GCP + Terraform + Cloud Run + secrets)
+- [ ] Gateway skeleton (FastAPI baseline deployed)
+- [ ] Model integration (LLM call working end-to-end)
+- [ ] Routing (model selection + basic policies)
+- [ ] Governance (validation + PII/basic filtering)
+- [ ] Observability (logs + error visibility)
+- [ ] Hardening (env config + reliable deploys)
 
 ---
 
