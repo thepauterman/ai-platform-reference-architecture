@@ -14,66 +14,66 @@ The goal is to understand how AI systems evolve from simple applications into re
 
 ## 🛣️ Roadmap
 
-☑️ Reference architecture  
-             ☑️ Define platform layers (infra → app)  
-  ☑️ Map request flow end-to-end  
-  ☑️ Control plane vs data plane  
-  ☑️ Design principles and tradeoffs  
+- [x] Reference architecture  
+  - [x] Define platform layers (infra → app)  
+  - [x] Map request flow end-to-end  
+  - [x] Control plane vs data plane  
+  - [x] Design principles and tradeoffs  
 
-☑️ Dev setup (local run + config)  
-  ☑️ Python environment + dependencies  
-  ☑️ Local config (.env)  
-  ☑️ Docker local run  
-  ☑️ Repo structure + workflow  
+- [x] Dev setup (local run + config)  
+  - [x] Python environment + dependencies  
+  - [x] Local config (.env)  
+  - [x] Docker local run  
+  - [x] Repo structure + workflow  
 
-☑️ Infra (GCP + Terraform + Cloud Run + secrets)  
-  ☑️ GCP project + service enablement  
-  ☑️ IAM + service accounts  
-  ☑️ Secret Manager wiring  
-  ☑️ Cloud Run base service  
-  ☑️ Terraform-managed resources  
+- [x] Infra (GCP + Terraform + Cloud Run + secrets)  
+  - [x] GCP project + service enablement  
+  - [x] IAM + service accounts  
+  - [x] Secret Manager wiring  
+  - [x] Cloud Run base service  
+  - [x] Terraform-managed resources  
 
-⬜ Gateway skeleton (FastAPI baseline deployed)  
-  ⬜ FastAPI app scaffold  
-  ⬜ `/health` endpoint  
-  ⬜ `/query` endpoint (placeholder)  
-  ⬜ Dockerfile + container build  
-  ⬜ Deploy to Cloud Run  
+- [ ] Gateway skeleton (FastAPI baseline deployed)  
+  - [ ] FastAPI app scaffold  
+  - [ ] `/health` endpoint  
+  - [ ] `/query` endpoint (placeholder)  
+  - [ ] Dockerfile + container build  
+  - [ ] Deploy to Cloud Run  
 
-⬜ Model integration (LLM call working end-to-end)  
-  ⬜ Provider abstraction layer  
-  ⬜ API key via secrets  
-  ⬜ Basic prompt → response flow  
-  ⬜ Response parsing + error handling  
-  ⬜ End-to-end validation  
+- [ ] Model integration (LLM call working end-to-end)  
+  - [ ] Provider abstraction layer  
+  - [ ] API key via secrets  
+  - [ ] Prompt → response flow  
+  - [ ] Response parsing + error handling  
+  - [ ] End-to-end validation  
 
-⬜ Routing (model selection + basic policies)  
-  ⬜ Model selection logic  
-  ⬜ Request classification (simple vs complex)  
-  ⬜ Default + fallback behavior  
-  ⬜ Approved model list  
-  ⬜ Cost/latency-aware decisions  
+- [ ] Routing (model selection + basic policies)  
+  - [ ] Model selection logic  
+  - [ ] Request classification  
+  - [ ] Default + fallback behavior  
+  - [ ] Approved model list  
+  - [ ] Cost/latency-aware decisions  
 
-⬜ Governance (validation + PII/basic filtering)  
-  ⬜ Input validation layer  
-  ⬜ PII detection (regex-based)  
-  ⬜ Masking / redaction  
-  ⬜ Prompt inspection rules  
-  ⬜ Unsafe input handling  
+- [ ] Governance (validation + PII/basic filtering)  
+  - [ ] Input validation  
+  - [ ] PII detection (regex)  
+  - [ ] Masking / redaction  
+  - [ ] Prompt inspection  
+  - [ ] Unsafe input handling  
 
-⬜ Observability (logs + error visibility)  
-  ⬜ Structured logging  
-  ⬜ Request/response logging  
-  ⬜ Error tracking  
-  ⬜ Basic request tracing  
-  ⬜ Audit-friendly logs  
+- [ ] Observability (logs + error visibility)  
+  - [ ] Structured logging  
+  - [ ] Request/response logs  
+  - [ ] Error tracking  
+  - [ ] Basic tracing  
+  - [ ] Audit logs  
 
-⬜ Hardening (env config + reliable deploys)  
-  ⬜ Environment configs (dev/prod)  
-  ⬜ Config validation  
-  ⬜ Retry + timeout handling  
-  ⬜ Deployment consistency checks  
-  ⬜ Cleanup + refactor  
+- [ ] Hardening (env config + reliable deploys)  
+  - [ ] Env configs (dev/prod)  
+  - [ ] Config validation  
+  - [ ] Retries + timeouts  
+  - [ ] Deploy consistency  
+  - [ ] Cleanup + refactor  
 
 ---
 
