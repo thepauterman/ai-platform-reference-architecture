@@ -15,7 +15,7 @@ The goal is to understand how AI systems evolve from simple applications into re
 ## 🛣️ Roadmap
 
 ☑️ Reference architecture  
-  ☑️ Define platform layers (infra → app)  
+             ☑️ Define platform layers (infra → app)  
   ☑️ Map request flow end-to-end  
   ☑️ Control plane vs data plane  
   ☑️ Design principles and tradeoffs  
