@@ -14,15 +14,66 @@ The goal is to understand how AI systems evolve from simple applications into re
 
 ## 🛣️ Roadmap
 
-- [x] Reference architecture
-- [x] Dev setup (local run + config)
-- [x] Infra (GCP + Terraform + Cloud Run + secrets)
-- [ ] Gateway skeleton (FastAPI baseline deployed)
-- [ ] Model integration (LLM call working end-to-end)
-- [ ] Routing (model selection + basic policies)
-- [ ] Governance (validation + PII/basic filtering)
-- [ ] Observability (logs + error visibility)
-- [ ] Hardening (env config + reliable deploys)
+☑️ Reference architecture  
+  ☑️ Define platform layers (infra → app)  
+  ☑️ Map request flow end-to-end  
+  ☑️ Control plane vs data plane  
+  ☑️ Design principles and tradeoffs  
+
+☑️ Dev setup (local run + config)  
+  ☑️ Python environment + dependencies  
+  ☑️ Local config (.env)  
+  ☑️ Docker local run  
+  ☑️ Repo structure + workflow  
+
+☑️ Infra (GCP + Terraform + Cloud Run + secrets)  
+  ☑️ GCP project + service enablement  
+  ☑️ IAM + service accounts  
+  ☑️ Secret Manager wiring  
+  ☑️ Cloud Run base service  
+  ☑️ Terraform-managed resources  
+
+⬜ Gateway skeleton (FastAPI baseline deployed)  
+  ⬜ FastAPI app scaffold  
+  ⬜ `/health` endpoint  
+  ⬜ `/query` endpoint (placeholder)  
+  ⬜ Dockerfile + container build  
+  ⬜ Deploy to Cloud Run  
+
+⬜ Model integration (LLM call working end-to-end)  
+  ⬜ Provider abstraction layer  
+  ⬜ API key via secrets  
+  ⬜ Basic prompt → response flow  
+  ⬜ Response parsing + error handling  
+  ⬜ End-to-end validation  
+
+⬜ Routing (model selection + basic policies)  
+  ⬜ Model selection logic  
+  ⬜ Request classification (simple vs complex)  
+  ⬜ Default + fallback behavior  
+  ⬜ Approved model list  
+  ⬜ Cost/latency-aware decisions  
+
+⬜ Governance (validation + PII/basic filtering)  
+  ⬜ Input validation layer  
+  ⬜ PII detection (regex-based)  
+  ⬜ Masking / redaction  
+  ⬜ Prompt inspection rules  
+  ⬜ Unsafe input handling  
+
+⬜ Observability (logs + error visibility)  
+  ⬜ Structured logging  
+  ⬜ Request/response logging  
+  ⬜ Error tracking  
+  ⬜ Basic request tracing  
+  ⬜ Audit-friendly logs  
+
+⬜ Hardening (env config + reliable deploys)  
+  ⬜ Environment configs (dev/prod)  
+  ⬜ Config validation  
+  ⬜ Retry + timeout handling  
+  ⬜ Deployment consistency checks  
+  ⬜ Cleanup + refactor  
 
 ---
 
