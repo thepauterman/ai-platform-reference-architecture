@@ -141,7 +141,7 @@ This project focuses on:
 
 ---
 
-## 🛣️ Roadmap
+## 🛣️ Phases
 
 - Phase 1 - Platform foundation (cloud, IAM, infra)
 - Phase 2 - Data platform (ingestion, embeddings)
