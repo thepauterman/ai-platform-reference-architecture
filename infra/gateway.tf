@@ -25,6 +25,18 @@ resource "google_secret_manager_secret" "model_api_key" {
     auto {}
   }
 }
+resource "google_secret_manager_secret" "openai_api_key" {
+  secret_id = "openai-api-key"
+  replication {
+    auto {}
+  }
+}
+resource "google_secret_manager_secret" "anthropic_api_key" {
+  secret_id = "anthropic-api-key"
+  replication {
+    auto {}
+  }
+}
 
 resource "google_secret_manager_secret_version" "model_api_key_v1" {
   secret      = google_secret_manager_secret.model_api_key.id
