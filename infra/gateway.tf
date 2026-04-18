@@ -1,4 +1,13 @@
 # -----------------------------
+# Artifact Registry
+# -----------------------------
+resource "google_artifact_registry_repository" "gateway" {
+  location      = var.region
+  repository_id = "ai-gateway"
+  format        = "DOCKER"
+}
+
+# -----------------------------
 # Runtime Service Account
 # -----------------------------
 resource "google_service_account" "gateway_runtime" {
@@ -35,7 +44,7 @@ resource "google_secret_manager_secret_iam_member" "gateway_secret_access" {
 # Cloud Run Service (placeholder)
 # -----------------------------
 resource "google_cloud_run_v2_service" "gateway" {
-  name                = "ai-governance-gateway"
+  name                = var.service_name
   location            = var.region
   deletion_protection = false
 
