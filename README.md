@@ -14,66 +14,82 @@ The goal is to understand how AI systems evolve from simple applications into re
 
 ## 🛣️ Roadmap
 
-- [x] Reference architecture  
+- [x] Phase 1: Reference architecture  
   - [x] Define platform layers (infra → app)  
   - [x] Map request flow end-to-end  
   - [x] Control plane vs data plane  
   - [x] Design principles and tradeoffs  
 
-- [x] Dev setup (local run + config)  
+- [x] Phase 2: Dev setup (local run + config)  
   - [x] Python environment + dependencies  
   - [x] Local config (.env)  
   - [x] Docker local run  
   - [x] Repo structure + workflow  
 
-- [x] Infra (GCP + Terraform + Cloud Run + secrets)  
+- [x] Phase 3: Infra (GCP + Terraform + Cloud Run + secrets)  
   - [x] GCP project + service enablement  
   - [x] IAM + service accounts  
   - [x] Secret Manager wiring  
   - [x] Cloud Run base service  
   - [x] Terraform-managed resources  
 
-- [x] Gateway skeleton (FastAPI baseline deployed)  
+- [x] Phase 4: Gateway skeleton (FastAPI baseline deployed)  
   - [x] FastAPI app scaffold  
   - [x] `/health` endpoint  
   - [x] `/query` endpoint (placeholder)  
   - [x] Dockerfile + container build  
   - [x] Deploy to Cloud Run  
 
-- [ ] Model integration (LLM call working end-to-end)  
+- [ ] Phase 5: Model integration (LLM call working end-to-end)  
   - [ ] Provider abstraction layer  
   - [ ] API key via secrets  
   - [ ] Prompt → response flow  
   - [ ] Response parsing + error handling  
   - [ ] End-to-end validation  
 
-- [ ] Routing (model selection + basic policies)  
+- [ ] Phase 6: Routing (model selection + basic policies)  
   - [ ] Model selection logic  
   - [ ] Request classification  
   - [ ] Default + fallback behavior  
   - [ ] Approved model list  
   - [ ] Cost/latency-aware decisions  
 
-- [ ] Governance (validation + PII/basic filtering)  
+- [ ] Phase 7: Governance (validation + PII/basic filtering)  
   - [ ] Input validation  
   - [ ] PII detection (regex)  
   - [ ] Masking / redaction  
   - [ ] Prompt inspection  
   - [ ] Unsafe input handling  
 
-- [ ] Observability (logs + error visibility)  
+- [ ] Phase 8: Observability (logs + error visibility)  
   - [ ] Structured logging  
   - [ ] Request/response logs  
   - [ ] Error tracking  
   - [ ] Basic tracing  
   - [ ] Audit logs  
 
-- [ ] Hardening (env config + reliable deploys)  
+- [ ] Phase 9: Hardening (env config + reliable deploys)  
   - [ ] Env configs (dev/prod)  
   - [ ] Config validation  
   - [ ] Retries + timeouts  
   - [ ] Deploy consistency  
   - [ ] Cleanup + refactor  
+
+- [ ] Phase 10: UI / Visual Dashboard
+  - [ ] Real-time query visualiser
+  - [ ] Animated architecture diagram
+  - [ ] Each platform layer highlights as request flows through
+  - [ ] Model selection shown inline
+  - [ ] Policy decisions surfaced visually
+  - [ ] Latency per layer displayed
+  - [ ] Built with Claude Code
+
+- [ ] Phase 11: RAG + Vector DB
+  - [ ] Vector DB (Vertex AI Vector Search)
+  - [ ] Document ingestion pipeline
+  - [ ] Chunking + embeddings
+  - [ ] Retrieval layer wired into gateway
+  - [ ] UI extended to show retrieval flow
 
 ---
 
@@ -138,20 +154,6 @@ This project focuses on:
 - Understanding AI platform architecture patterns
 - Exploring how systems evolve from prototype → production → platform
 - Designing reusable infrastructure for multiple AI use cases
-
----
-
-## 🛣️ Phases
-
-- Phase 1 - Platform foundation (cloud, IAM, infra)
-- Phase 2 - Data platform (ingestion, embeddings)
-- Phase 3 - Retrieval layer (vector search)
-- Phase 4 - Model integration (inference, routing)
-- Phase 5 - Orchestration (RAG workflows, tools)
-- Phase 6 - Application layer (API/UI)
-- Phase 7 - Observability and evaluation
-
-See [roadmap.md](./docs/roadmap.md) for more details.
 
 ---
 
