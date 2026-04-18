@@ -52,7 +52,7 @@ resource "google_cloud_run_v2_service" "gateway" {
     service_account = google_service_account.gateway_runtime.email
 
     containers {
-      image = "us-docker.pkg.dev/cloudrun/container/hello"
+      image = "us-central1-docker.pkg.dev/silver-origin-161220/ai-gateway/gateway:v4"
 
       env {
         name = "MODEL_API_KEY"
