@@ -1,6 +1,6 @@
 import uuid
 from fastapi import FastAPI
-from app.models import QueryRequest, QueryResponse
+from models import QueryRequest, QueryResponse
 
 # -----------------------------
 # App initialisation

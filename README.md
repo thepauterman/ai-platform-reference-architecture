@@ -33,14 +33,14 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Cloud Run base service  
   - [x] Terraform-managed resources  
 
-- [ ] Gateway skeleton (FastAPI baseline deployed)  
-  - [ ] FastAPI app scaffold  
-  - [ ] `/health` endpoint  
-  - [ ] `/query` endpoint (placeholder)  
-  - [ ] Dockerfile + container build  
-  - [ ] Deploy to Cloud Run  
+- [x] Gateway skeleton (FastAPI baseline deployed)  
+  - [x] FastAPI app scaffold  
+  - [x] `/health` endpoint  
+  - [x] `/query` endpoint (placeholder)  
+  - [x] Dockerfile + container build  
+  - [x] Deploy to Cloud Run  
 
-- [ ] Model integration (LLM call working end-to-end)  
+- [] Model integration (LLM call working end-to-end)  
   - [ ] Provider abstraction layer  
   - [ ] API key via secrets  
   - [ ] Prompt → response flow  
