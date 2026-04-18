@@ -40,7 +40,7 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Dockerfile + container build  
   - [x] Deploy to Cloud Run  
 
-- [] Model integration (LLM call working end-to-end)  
+- [ ] Model integration (LLM call working end-to-end)  
   - [ ] Provider abstraction layer  
   - [ ] API key via secrets  
   - [ ] Prompt → response flow  
