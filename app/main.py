@@ -1,6 +1,8 @@
 import uuid
-from fastapi import FastAPI
+import os
+from fastapi import FastAPI, HTTPException
 from models import QueryRequest, QueryResponse
+from providers import get_provider
 
 # -----------------------------
 # App initialisation
@@ -10,6 +12,9 @@ app = FastAPI(
     description="Control plane between users and AI models",
     version="0.1.0"
 )
+
+# Default provider — will become routing logic in Phase 6
+DEFAULT_PROVIDER = os.getenv("DEFAULT_PROVIDER", "openai")
 
 # -----------------------------
 # Health check
@@ -23,19 +28,32 @@ def health():
     }
 
 # -----------------------------
-# Query endpoint (skeleton)
-# Week 4: replace placeholder with real model call
-# Week 5: add routing logic
-# Week 6: add policy + PII check
+# Query endpoint
+# Phase 6: replace DEFAULT_PROVIDER with routing logic
+# Phase 7: add policy + PII check before provider call
+# Phase 8: add structured logging around this flow
 # -----------------------------
 @app.post("/query", response_model=QueryResponse)
 def query(request: QueryRequest):
     request_id = str(uuid.uuid4())
 
-    # Placeholder — no model call yet
-    return QueryResponse(
-        response="Placeholder response - model not yet connected",
-        model_used=None,
-        policy_checked=False,
-        request_id=request_id
-    )
+    try:
+        provider = get_provider(DEFAULT_PROVIDER)
+        response_text = provider.call(request.prompt)
+
+        return QueryResponse(
+            response=response_text,
+            model_used=DEFAULT_PROVIDER,
+            policy_checked=False,
+            request_id=request_id
+        )
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": str(e),
+                "request_id": request_id,
+                "provider": DEFAULT_PROVIDER
+            }
+        )
