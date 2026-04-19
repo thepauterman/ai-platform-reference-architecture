@@ -53,6 +53,18 @@ resource "google_secret_manager_secret_iam_member" "gateway_secret_access" {
   member    = "serviceAccount:${google_service_account.gateway_runtime.email}"
 }
 
+resource "google_secret_manager_secret_iam_member" "gateway_openai_access" {
+  secret_id = google_secret_manager_secret.openai_api_key.secret_id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.gateway_runtime.email}"
+}
+
+resource "google_secret_manager_secret_iam_member" "gateway_anthropic_access" {
+  secret_id = google_secret_manager_secret.anthropic_api_key.secret_id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.gateway_runtime.email}"
+}
+
 # -----------------------------
 # Cloud Run Service (placeholder)
 # -----------------------------
@@ -65,7 +77,7 @@ resource "google_cloud_run_v2_service" "gateway" {
     service_account = google_service_account.gateway_runtime.email
 
     containers {
-      image = "us-central1-docker.pkg.dev/silver-origin-161220/ai-gateway/gateway:v6"
+      image = "us-central1-docker.pkg.dev/silver-origin-161220/ai-gateway/gateway:v7"
 
       env {
         name = "MODEL_API_KEY"

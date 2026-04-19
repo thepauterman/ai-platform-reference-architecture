@@ -50,8 +50,10 @@ def query(request: QueryRequest):
             policy_checked=False,
             request_id=request_id
         )
-
+        
     except Exception as e:
+        import traceback
+        print(traceback.format_exc())
         raise HTTPException(
             status_code=500,
             detail={
