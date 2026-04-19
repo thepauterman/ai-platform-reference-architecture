@@ -40,12 +40,12 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Dockerfile + container build  
   - [x] Deploy to Cloud Run  
 
-- [ ] Phase 5: Model integration (LLM call working end-to-end)  
-  - [ ] Provider abstraction layer  
-  - [ ] API key via secrets  
-  - [ ] Prompt → response flow  
-  - [ ] Response parsing + error handling  
-  - [ ] End-to-end validation  
+- [x] Phase 5: Model integration (LLM call working end-to-end)  
+  - [x] Provider abstraction layer  
+  - [x] API key via secrets  
+  - [x] Prompt → response flow  
+  - [x] Response parsing + error handling  
+  - [x] End-to-end validation  
 
 - [ ] Phase 6: Routing (model selection + basic policies)  
   - [ ] Model selection logic  
