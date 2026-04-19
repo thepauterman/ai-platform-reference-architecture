@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import uuid
 import os
 from fastapi import FastAPI, HTTPException
