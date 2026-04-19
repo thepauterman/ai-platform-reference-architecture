@@ -31,6 +31,7 @@ resource "google_secret_manager_secret" "openai_api_key" {
     auto {}
   }
 }
+
 resource "google_secret_manager_secret" "anthropic_api_key" {
   secret_id = "anthropic-api-key"
   replication {
@@ -64,7 +65,7 @@ resource "google_cloud_run_v2_service" "gateway" {
     service_account = google_service_account.gateway_runtime.email
 
     containers {
-      image = "us-central1-docker.pkg.dev/silver-origin-161220/ai-gateway/gateway:v4"
+      image = "us-central1-docker.pkg.dev/silver-origin-161220/ai-gateway/gateway:v6"
 
       env {
         name = "MODEL_API_KEY"
@@ -74,6 +75,35 @@ resource "google_cloud_run_v2_service" "gateway" {
             version = "latest"
           }
         }
+      }
+      env {
+        name = "OPENAI_API_KEY"
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.openai_api_key.secret_id
+            version = "latest"
+          }
+        }
+      }
+
+      env {
+        name = "ANTHROPIC_API_KEY"
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.anthropic_api_key.secret_id
+            version = "latest"
+          }
+        }
+      }
+
+      env {
+        name  = "DEFAULT_PROVIDER"
+        value = "openai"
+      }
+
+      env {
+        name  = "GCP_PROJECT_ID"
+        value = "silver-origin-161220"
       }
     }
   }
