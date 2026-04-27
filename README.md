@@ -54,12 +54,12 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Approved model list  
   - [x] Cost/latency-aware decisions  
 
-- [ ] Phase 7: Governance (validation + PII/basic filtering)  
-  - [ ] Input validation  
-  - [ ] PII detection (regex)  
-  - [ ] Masking / redaction  
-  - [ ] Prompt inspection  
-  - [ ] Unsafe input handling  
+- [x] Phase 7: Governance (validation + PII/basic filtering)  
+  - [x] Input validation  
+  - [x] PII detection (regex)  
+  - [x] Masking / redaction  
+  - [x] Prompt inspection  
+  - [x] Unsafe input handling  
 
 - [ ] Phase 8: Observability (logs + error visibility)  
   - [ ] Structured logging  
