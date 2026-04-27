@@ -1,13 +1,19 @@
 import sqlite3
 import json
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 # -----------------------------
-# Database setup
+# Config
 # -----------------------------
+AUDIT_BACKEND = os.getenv("AUDIT_BACKEND", "sqlite")
 DB_PATH = os.getenv("AUDIT_DB_PATH", "audit.db")
+GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
+FIRESTORE_COLLECTION = "audit_logs"
 
+# -----------------------------
+# SQLite setup
+# -----------------------------
 CREATE_TABLE_SQL = """
 CREATE TABLE IF NOT EXISTS audit_log (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,15 +27,23 @@ CREATE TABLE IF NOT EXISTS audit_log (
 
 def init_db():
     """
-    Create the audit log table if it doesn't exist.
-    Called once on startup.
+    Initialise storage backend on startup.
+    SQLite: creates table if not exists.
+    Firestore: no init needed, collection created on first write.
     """
-    conn = sqlite3.connect(DB_PATH)
-    conn.execute(CREATE_TABLE_SQL)
-    conn.commit()
-    conn.close()
+    if AUDIT_BACKEND == "sqlite":
+        conn = sqlite3.connect(DB_PATH)
+        conn.execute(CREATE_TABLE_SQL)
+        conn.commit()
+        conn.close()
+        print(f"Audit backend: SQLite ({DB_PATH})")
+    else:
+        print(f"Audit backend: Firestore (project={GCP_PROJECT_ID})")
 
 
+# -----------------------------
+# Write log entry
+# -----------------------------
 def log_request(
     request_id: str,
     prompt: str,
@@ -37,10 +51,18 @@ def log_request(
     metadata: dict = None
 ):
     """
-    Log a single request to the audit database.
+    Log a single request to the audit backend.
     outcome: "approved", "blocked", "error"
-    metadata: dict with governance, routing, model info
     """
+    timestamp = datetime.now(timezone.utc).isoformat()
+
+    if AUDIT_BACKEND == "firestore":
+        _log_to_firestore(request_id, timestamp, prompt, outcome, metadata)
+    else:
+        _log_to_sqlite(request_id, timestamp, prompt, outcome, metadata)
+
+
+def _log_to_sqlite(request_id, timestamp, prompt, outcome, metadata):
     conn = sqlite3.connect(DB_PATH)
     conn.execute(
         """
@@ -49,7 +71,7 @@ def log_request(
         """,
         (
             request_id,
-            datetime.now(timezone.utc).isoformat(),
+            timestamp,
             prompt[:500],
             outcome,
             json.dumps(metadata) if metadata else None
@@ -59,20 +81,77 @@ def log_request(
     conn.close()
 
 
+def _log_to_firestore(request_id, timestamp, prompt, outcome, metadata):
+    from google.cloud import firestore
+    db = firestore.Client(project=GCP_PROJECT_ID)
+    db.collection(FIRESTORE_COLLECTION).document(request_id).set({
+        "request_id": request_id,
+        "timestamp": timestamp,
+        "prompt": prompt[:500],
+        "outcome": outcome,
+        "metadata": metadata or {}
+    })
+
+
+# -----------------------------
+# Read log entries
+# -----------------------------
 def get_recent_logs(limit: int = 20) -> list:
     """
     Retrieve recent audit log entries.
-    Used by the /audit endpoint.
     """
+    if AUDIT_BACKEND == "firestore":
+        return _get_logs_from_firestore(limit)
+    else:
+        return _get_logs_from_sqlite(limit)
+
+
+def _get_logs_from_sqlite(limit):
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     rows = conn.execute(
-        """
-        SELECT * FROM audit_log
-        ORDER BY id DESC
-        LIMIT ?
-        """,
+        "SELECT * FROM audit_log ORDER BY id DESC LIMIT ?",
         (limit,)
     ).fetchall()
     conn.close()
-    return [dict(row) for row in rows]
+    logs = []
+    for row in rows:
+        entry = dict(row)
+        # Rebuild dict with timestamp_pt right after timestamp
+        ordered_entry = {
+            "id": entry["id"],
+            "request_id": entry["request_id"],
+            "timestamp": entry["timestamp"],
+            "timestamp_pt": _convert_to_pt(entry["timestamp"]),
+            "prompt": entry["prompt"],
+            "outcome": entry["outcome"],
+            "metadata": json.loads(entry["metadata"]) if entry.get("metadata") else {}
+        }
+        logs.append(ordered_entry)
+    return logs
+
+
+def _get_logs_from_firestore(limit):
+    from google.cloud import firestore
+    db = firestore.Client(project=GCP_PROJECT_ID)
+    docs = (
+        db.collection(FIRESTORE_COLLECTION)
+        .order_by("timestamp", direction=firestore.Query.DESCENDING)
+        .limit(limit)
+        .stream()
+    )
+    return [doc.to_dict() for doc in docs]
+
+
+# -----------------------------
+# Convert timestamp to PT
+# -----------------------------
+def _convert_to_pt(utc_timestamp: str) -> str:
+    """Convert UTC ISO timestamp to PT for display."""
+    try:
+        dt = datetime.fromisoformat(utc_timestamp)
+        pt_offset = timedelta(hours=-7)  # PDT (UTC-7), use -8 for PST
+        pt_time = dt + pt_offset
+        return pt_time.strftime("%Y-%m-%d %I:%M:%S %p PT")
+    except:
+        return utc_timestamp
