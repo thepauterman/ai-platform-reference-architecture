@@ -1,8 +1,10 @@
 # AI Platform Reference Architecture + AI Gateway implementation
 
-This repository contains both the reference architecture and the initial implementation of an AI Governance Gateway, which serves as the first executable component of the platform.
+This repository contains both the reference architecture and the implementation of an AI Governance Gateway — the first executable component of the platform.
 
-The reference architecture use is to set a foundation to designing and building a modern AI platform, focused on patterns such as Retrieval-Augmented Generation (RAG), orchestration, model routing, and observability.
+The gateway sits between users and AI models, enforcing governance controls before any prompt reaches a model. This includes PII detection and masking, unsafe input blocking, model routing by request complexity, and a full audit trail of every request.
+
+The reference architecture provides a foundation for designing and building a modern AI platform, focused on patterns such as Retrieval-Augmented Generation (RAG), orchestration, model routing, and observability.
 
 The goal is to understand how AI systems evolve from simple applications into reusable, scalable platforms.
 
@@ -61,12 +63,12 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Prompt inspection  
   - [x] Unsafe input handling  
 
-- [ ] Phase 8: Observability (logs + error visibility)  
-  - [ ] Structured logging  
-  - [ ] Request/response logs  
-  - [ ] Error tracking  
-  - [ ] Basic tracing  
-  - [ ] Audit logs  
+- [x] Phase 8: Observability (logs + error visibility)  
+  - [x] Structured logging  
+  - [x] Request/response logs  
+  - [x] Error tracking  
+  - [x] Basic tracing  
+  - [x] Audit logs  
 
 - [ ] Phase 9: Hardening (env config + reliable deploys)  
   - [ ] Env configs (dev/prod)  
@@ -131,8 +133,17 @@ Combining LLMs with external knowledge sources to improve accuracy and grounding
 ### Orchestration
 Coordinating workflows between retrieval, models, and tools.
 
+### AI Governance Gateway
+Sitting between users and models to enforce control and safety policies before any prompt reaches a model.
+
+- **PII detection + masking** — identifies and redacts emails, SSNs, phone numbers, and credit card numbers before the prompt leaves the gateway
+- **Unsafe input blocking** — detects and blocks prompt injection attempts and jailbreak keywords with a 403 response
+- **Input validation** — enforces prompt length limits and rejects malformed requests
+- **Policy enforcement** — every request is inspected, approved or blocked, and logged with a full audit trail
+- **Model routing by classification** — routes simple, standard, and complex requests to the appropriate model based on cost and capability
+
 ### Model Gateway / Routing
-Selecting models dynamically based on cost, latency, or capability.
+Selecting models dynamically based on prompt complexity, cost, and capability. Routes simple requests to cheaper models, complex requests to more capable models, with automatic fallback behavior if a provider fails.
 
 ### Observability & Evaluation
 Monitoring prompts, responses, and system behavior to improve quality and reliability.

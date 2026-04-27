@@ -1,4 +1,3 @@
-from governance import inspect as governance_inspect
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -8,6 +7,8 @@ from fastapi import FastAPI, HTTPException
 from models import QueryRequest, QueryResponse
 from providers import get_provider
 from router import get_route
+from governance import inspect as governance_inspect
+from audit_logger import init_db, log_request, get_recent_logs
 
 # -----------------------------
 # App initialisation
@@ -18,6 +19,9 @@ app = FastAPI(
     version="0.1.0"
 )
 
+@app.on_event("startup")
+def startup():
+    init_db()
 
 # -----------------------------
 # Health check
@@ -31,18 +35,31 @@ def health():
     }
 
 # -----------------------------
+# Audit endpoint
+# -----------------------------
+@app.get("/audit")
+def audit(limit: int = 20):
+    return {"logs": get_recent_logs(limit=limit)}
+
+# -----------------------------
 # Query endpoint
-# Phase 6: replace DEFAULT_PROVIDER with routing logic
-# Phase 7: add policy + PII check before provider call
-# Phase 8: add structured logging around this flow
 # -----------------------------
 @app.post("/query", response_model=QueryResponse)
 def query(request: QueryRequest):
     request_id = str(uuid.uuid4())
 
-    # Governance check — runs before routing
+    # Step 1 — Governance check
     gov = governance_inspect(request.prompt)
     if not gov["approved"]:
+        log_request(
+            request_id=request_id,
+            prompt=request.prompt,
+            outcome="blocked",
+            metadata={
+                "reason": gov["reason"],
+                "pii_detected": gov["pii_detected"]
+            }
+        )
         raise HTTPException(
             status_code=403,
             detail={
@@ -52,7 +69,7 @@ def query(request: QueryRequest):
             }
         )
 
-    # Use masked prompt for routing and model call
+    # Step 2 — Route
     safe_prompt = gov["masked_prompt"]
     route = get_route(safe_prompt)
     provider_name = route["provider"]
@@ -60,6 +77,19 @@ def query(request: QueryRequest):
     try:
         provider = get_provider(provider_name)
         response_text = provider.call(safe_prompt)
+
+        log_request(
+            request_id=request_id,
+            prompt=safe_prompt,
+            outcome="approved",
+            metadata={
+                "provider": provider_name,
+                "classification": route["classification"],
+                "pii_detected": gov["pii_detected"],
+                "fallback_used": False
+            }
+        )
+
         return QueryResponse(
             response=response_text,
             model_used=provider_name,
@@ -68,11 +98,25 @@ def query(request: QueryRequest):
             classification=route["classification"],
             fallback_used=False
         )
+
     except Exception as e:
         try:
             fallback_name = route["fallback"]
             provider = get_provider(fallback_name)
             response_text = provider.call(safe_prompt)
+
+            log_request(
+                request_id=request_id,
+                prompt=safe_prompt,
+                outcome="approved",
+                metadata={
+                    "provider": fallback_name,
+                    "classification": route["classification"],
+                    "pii_detected": gov["pii_detected"],
+                    "fallback_used": True
+                }
+            )
+
             return QueryResponse(
                 response=response_text,
                 model_used=fallback_name,
@@ -81,14 +125,20 @@ def query(request: QueryRequest):
                 classification=route["classification"],
                 fallback_used=True
             )
+
         except Exception as fallback_error:
+            log_request(
+                request_id=request_id,
+                prompt=safe_prompt,
+                outcome="error",
+                metadata={"error": str(fallback_error)}
+            )
             import traceback
             print(traceback.format_exc())
             raise HTTPException(
                 status_code=500,
                 detail={
                     "error": str(fallback_error),
-                    "request_id": request_id,
-                    "provider": fallback_name
+                    "request_id": request_id
                 }
             )
