@@ -6,6 +6,7 @@ import os
 from fastapi import FastAPI, HTTPException
 from models import QueryRequest, QueryResponse
 from providers import get_provider
+from router import get_route
 
 # -----------------------------
 # App initialisation
@@ -16,8 +17,6 @@ app = FastAPI(
     version="0.1.0"
 )
 
-# Default provider — will become routing logic in Phase 6
-DEFAULT_PROVIDER = os.getenv("DEFAULT_PROVIDER", "openai")
 
 # -----------------------------
 # Health check
@@ -39,26 +38,43 @@ def health():
 @app.post("/query", response_model=QueryResponse)
 def query(request: QueryRequest):
     request_id = str(uuid.uuid4())
+    route = get_route(request.prompt)
+    provider_name = route["provider"]
 
     try:
-        provider = get_provider(DEFAULT_PROVIDER)
+        provider = get_provider(provider_name)
         response_text = provider.call(request.prompt)
-
         return QueryResponse(
             response=response_text,
-            model_used=DEFAULT_PROVIDER,
+            model_used=provider_name,
             policy_checked=False,
-            request_id=request_id
+            request_id=request_id,
+            classification=route["classification"],
+            fallback_used=False
         )
-        
     except Exception as e:
-        import traceback
-        print(traceback.format_exc())
-        raise HTTPException(
-            status_code=500,
-            detail={
-                "error": str(e),
-                "request_id": request_id,
-                "provider": DEFAULT_PROVIDER
-            }
-        )
+        # Fallback to secondary provider
+        try:
+            fallback_name = route["fallback"]
+            provider = get_provider(fallback_name)
+            response_text = provider.call(request.prompt)
+            return QueryResponse(
+                response=response_text, 
+                model_used=fallback_name,
+                policy_checked=False,
+                request_id=request_id,
+                classification=route["classification"],
+                fallback_used=True # ← tells you fallback was used
+            )
+        except Exception as fallback_error:
+            import traceback
+            print(traceback.format_exc())
+            raise HTTPException(
+                status_code=500,
+                detail={
+                    "error": str(fallback_error),
+                    "request_id": request_id,
+                    "provider": fallback_name
+                }
+            )
+

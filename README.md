@@ -47,12 +47,12 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Response parsing + error handling  
   - [x] End-to-end validation  
 
-- [ ] Phase 6: Routing (model selection + basic policies)  
-  - [ ] Model selection logic  
-  - [ ] Request classification  
-  - [ ] Default + fallback behavior  
-  - [ ] Approved model list  
-  - [ ] Cost/latency-aware decisions  
+- [x] Phase 6: Routing (model selection + basic policies)  
+  - [x] Model selection logic  
+  - [x] Request classification  
+  - [x] Default + fallback behavior  
+  - [x] Approved model list  
+  - [x] Cost/latency-aware decisions  
 
 - [ ] Phase 7: Governance (validation + PII/basic filtering)  
   - [ ] Input validation  

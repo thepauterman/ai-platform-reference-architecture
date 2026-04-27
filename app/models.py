@@ -7,7 +7,7 @@ from typing import Optional
 # -----------------------------
 class QueryRequest(BaseModel):
     prompt: str
-    user_id: str
+    user_id: Optional[str] = None
     session_id: Optional[str] = None
 
 
@@ -19,3 +19,5 @@ class QueryResponse(BaseModel):
     model_used: Optional[str] = None
     policy_checked: bool = False
     request_id: Optional[str] = None
+    classification: Optional[str] = None  # ← add this
+    fallback_used: Optional[bool] = False  # ← add this
