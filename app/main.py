@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
-load_dotenv()
+from config import validate_config, ENV
+from resilience import with_retry
 
 import uuid
 import os
@@ -21,7 +22,9 @@ app = FastAPI(
 
 @app.on_event("startup")
 def startup():
+    validate_config()
     init_db()
+    print(f"Gateway started — ENV={ENV}")
 
 # -----------------------------
 # Health check
@@ -76,7 +79,7 @@ def query(request: QueryRequest):
 
     try:
         provider = get_provider(provider_name)
-        response_text = provider.call(safe_prompt)
+        response_text = with_retry(provider.call, safe_prompt)
 
         log_request(
             request_id=request_id,
@@ -103,7 +106,7 @@ def query(request: QueryRequest):
         try:
             fallback_name = route["fallback"]
             provider = get_provider(fallback_name)
-            response_text = provider.call(safe_prompt)
+            response_text = with_retry(provider.call, safe_prompt)
 
             log_request(
                 request_id=request_id,

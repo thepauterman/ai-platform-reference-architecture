@@ -70,12 +70,14 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Basic tracing  
   - [x] Audit logs  
 
-- [ ] Phase 9: Hardening (env config + reliable deploys)  
-  - [ ] Env configs (dev/prod)  
-  - [ ] Config validation  
-  - [ ] Retries + timeouts  
-  - [ ] Deploy consistency  
-  - [ ] Cleanup + refactor  
+- [ ] Phase 9: Hardening + Production Deploy
+  - [ ] Env configs (dev/prod)
+  - [ ] Config validation
+  - [ ] Retries + timeouts
+  - [ ] Migrate audit log from SQLite → Cloud Firestore
+  - [ ] Deploy to Cloud Run (full stack)
+  - [ ] Deploy consistency
+  - [ ] Cleanup + refactor
 
 - [ ] Phase 10: UI / Visual Dashboard
   - [ ] Real-time query visualiser
