@@ -56,7 +56,7 @@ def health():
 # Audit endpoint
 # -----------------------------
 @app.get("/audit")
-def audit(limit: int = 20):
+def audit(limit: int = 20, _ = Depends(verify_api_key)):
     return {"logs": get_recent_logs(limit=limit)}
 
 # -----------------------------
