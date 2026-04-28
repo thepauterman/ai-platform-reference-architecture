@@ -16,7 +16,7 @@ class VertexProvider(BaseProvider):
             project=os.getenv("GCP_PROJECT_ID"),
             location=os.getenv("GCP_REGION", "us-central1")
         )
-        self.model = GenerativeModel("gemini-1.5-flash")
+        self.model = GenerativeModel("gemini-2.0-flash-001")
 
     def call(self, prompt: str) -> str:
         response = self.model.generate_content(

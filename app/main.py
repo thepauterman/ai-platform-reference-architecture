@@ -1,10 +1,11 @@
 from dotenv import load_dotenv
 from config import validate_config, ENV
 from resilience import with_retry
+from fastapi import FastAPI, HTTPException, Depends, Security, status
+from fastapi.security.api_key import APIKeyHeader
 
 import uuid
 import os
-from fastapi import FastAPI, HTTPException
 from models import QueryRequest, QueryResponse
 from providers import get_provider
 from router import get_route
@@ -25,6 +26,20 @@ def startup():
     validate_config()
     init_db()
     print(f"Gateway started — ENV={ENV}")
+    print(f"API key configured: {bool(GATEWAY_API_KEY)}")
+
+# -----------------------------
+# API Key authentication
+# -----------------------------
+API_KEY_HEADER = APIKeyHeader(name="X-API-Key", auto_error=False)
+GATEWAY_API_KEY = os.getenv("GATEWAY_API_KEY")
+
+def verify_api_key(api_key: str = Security(API_KEY_HEADER)):
+    if GATEWAY_API_KEY and api_key != GATEWAY_API_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid or missing API key"
+        )
 
 # -----------------------------
 # Health check
@@ -48,7 +63,7 @@ def audit(limit: int = 20):
 # Query endpoint
 # -----------------------------
 @app.post("/query", response_model=QueryResponse)
-def query(request: QueryRequest):
+def query(request: QueryRequest, _ = Depends(verify_api_key)):
     request_id = str(uuid.uuid4())
 
     # Step 1 — Governance check
