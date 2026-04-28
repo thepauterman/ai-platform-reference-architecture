@@ -76,7 +76,7 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [ ] Retries + timeouts
   - [ ] Migrate audit log from SQLite → Cloud Firestore
   - [ ] Deploy to Cloud Run (full stack)
-  - [ ] Deploy consistency
+  - [ ] Deploy consistency (CI/CD pipeline)
   - [ ] Cleanup + refactor
 
 - [ ] Phase 10: UI / Visual Dashboard
