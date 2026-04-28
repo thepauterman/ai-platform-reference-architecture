@@ -83,7 +83,7 @@ def _log_to_sqlite(request_id, timestamp, prompt, outcome, metadata):
 
 def _log_to_firestore(request_id, timestamp, prompt, outcome, metadata):
     from google.cloud import firestore
-    db = firestore.Client(project=GCP_PROJECT_ID)
+    db = firestore.Client(project=GCP_PROJECT_ID, database="default")
     db.collection(FIRESTORE_COLLECTION).document(request_id).set({
         "request_id": request_id,
         "timestamp": timestamp,
@@ -133,7 +133,7 @@ def _get_logs_from_sqlite(limit):
 
 def _get_logs_from_firestore(limit):
     from google.cloud import firestore
-    db = firestore.Client(project=GCP_PROJECT_ID)
+    db = firestore.Client(project=GCP_PROJECT_ID, database="default")
     docs = (
         db.collection(FIRESTORE_COLLECTION)
         .order_by("timestamp", direction=firestore.Query.DESCENDING)

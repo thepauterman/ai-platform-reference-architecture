@@ -71,13 +71,15 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Audit logs  
 
 - [ ] Phase 9: Hardening + Production Deploy
-  - [ ] Env configs (dev/prod)
-  - [ ] Config validation
-  - [ ] Retries + timeouts
-  - [ ] Migrate audit log from SQLite → Cloud Firestore
-  - [ ] Deploy to Cloud Run (full stack)
+  - [x] Env configs (dev/prod)
+  - [x] Config validation
+  - [x] Retries + timeouts
+  - [x] Migrate audit log from SQLite → Cloud Firestore
+  - [x] Deploy to Cloud Run (full stack)
   - [ ] Deploy consistency (CI/CD pipeline)
   - [ ] Cleanup + refactor
+  - [ ] Add API key authentication
+  - [ ] Update Terraform for Firestore + IAM
 
 - [ ] Phase 10: UI / Visual Dashboard
   - [ ] Real-time query visualiser
