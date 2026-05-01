@@ -76,9 +76,9 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Retries + timeouts
   - [x] Migrate audit log from SQLite → Cloud Firestore
   - [x] Deploy to Cloud Run (full stack)
+  - [x] Add API key authentication
   - [ ] Deploy consistency (CI/CD pipeline)
   - [ ] Cleanup + refactor
-  - [ ] Add API key authentication
   - [ ] Update Terraform for Firestore + IAM
 
 - [ ] Phase 10: UI / Visual Dashboard
@@ -96,6 +96,26 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [ ] Chunking + embeddings
   - [ ] Retrieval layer wired into gateway
   - [ ] UI extended to show retrieval flow
+
+- [ ] Phase 12: AI Orchestration + Agent Framework
+  - [ ] Orchestration service (Python)
+  - [ ] Tool registry (approved read-only tools)
+  - [ ] Planner / executor pattern
+  - [ ] LlamaIndex for RAG-aware orchestration
+  - [ ] CrewAI for multi-agent coordination
+  - [ ] Human-in-the-loop approval checkpoint
+  - [ ] All agent traffic through governance + routing layers
+  - [ ] All agent actions in audit trail
+  - [ ] UI extended to show agent task flow
+
+- [ ] Phase 13: MCP Server
+  - [ ] MCP server exposing gateway as tools
+  - [ ] Tool definitions: query, audit, policy check, retrieval
+  - [ ] Claude Desktop / Claude Code connects via MCP
+  - [ ] External agents can call gateway as a tool
+  - [ ] Governance applied to all inbound MCP calls
+  - [ ] UI extended to show MCP connections
+
 
 ---
 
