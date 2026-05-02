@@ -77,7 +77,7 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Migrate audit log from SQLite → Cloud Firestore
   - [x] Deploy to Cloud Run (full stack)
   - [x] Add API key authentication
-  - [ ] Deploy consistency (CI/CD pipeline)
+  - [x] Deploy consistency (CI/CD pipeline)
   - [ ] Cleanup + refactor
   - [ ] Update Terraform for Firestore + IAM
 

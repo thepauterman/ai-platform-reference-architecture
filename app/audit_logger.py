@@ -1,7 +1,10 @@
 import sqlite3
 import json
 import os
+import logging
 from datetime import datetime, timezone, timedelta
+
+logger = logging.getLogger(__name__)
 
 # -----------------------------
 # Config
@@ -36,9 +39,9 @@ def init_db():
         conn.execute(CREATE_TABLE_SQL)
         conn.commit()
         conn.close()
-        print(f"Audit backend: SQLite ({DB_PATH})")
+        logger.info(f"Audit backend: SQLite ({DB_PATH})")
     else:
-        print(f"Audit backend: Firestore (project={GCP_PROJECT_ID})")
+        logger.info(f"Audit backend: Firestore (project={GCP_PROJECT_ID})")
 
 
 # -----------------------------
@@ -117,7 +120,6 @@ def _get_logs_from_sqlite(limit):
     logs = []
     for row in rows:
         entry = dict(row)
-        # Rebuild dict with timestamp_pt right after timestamp
         ordered_entry = {
             "id": entry["id"],
             "request_id": entry["request_id"],
@@ -153,5 +155,5 @@ def _convert_to_pt(utc_timestamp: str) -> str:
         pt_offset = timedelta(hours=-7)  # PDT (UTC-7), use -8 for PST
         pt_time = dt + pt_offset
         return pt_time.strftime("%Y-%m-%d %I:%M:%S %p PT")
-    except:
+    except Exception:
         return utc_timestamp

@@ -6,11 +6,22 @@ from fastapi.security.api_key import APIKeyHeader
 
 import uuid
 import os
+import traceback
+import logging
+
 from models import QueryRequest, QueryResponse
 from providers import get_provider
 from router import get_route
 from governance import inspect as governance_inspect
 from audit_logger import init_db, log_request, get_recent_logs
+
+logger = logging.getLogger(__name__)
+
+# -----------------------------
+# API Key authentication
+# -----------------------------
+API_KEY_HEADER = APIKeyHeader(name="X-API-Key", auto_error=False)
+GATEWAY_API_KEY = os.getenv("GATEWAY_API_KEY")
 
 # -----------------------------
 # App initialisation
@@ -25,14 +36,8 @@ app = FastAPI(
 def startup():
     validate_config()
     init_db()
-    print(f"Gateway started — ENV={ENV}")
-    print(f"API key configured: {bool(GATEWAY_API_KEY)}")
-
-# -----------------------------
-# API Key authentication
-# -----------------------------
-API_KEY_HEADER = APIKeyHeader(name="X-API-Key", auto_error=False)
-GATEWAY_API_KEY = os.getenv("GATEWAY_API_KEY")
+    logger.info(f"Gateway started — ENV={ENV}")
+    logger.info(f"API key configured: {bool(GATEWAY_API_KEY)}")
 
 def verify_api_key(api_key: str = Security(API_KEY_HEADER)):
     if GATEWAY_API_KEY and api_key != GATEWAY_API_KEY:
@@ -117,7 +122,7 @@ def query(request: QueryRequest, _ = Depends(verify_api_key)):
             fallback_used=False
         )
 
-    except Exception as e:
+    except Exception:
         try:
             fallback_name = route["fallback"]
             provider = get_provider(fallback_name)
@@ -151,8 +156,7 @@ def query(request: QueryRequest, _ = Depends(verify_api_key)):
                 outcome="error",
                 metadata={"error": str(fallback_error)}
             )
-            import traceback
-            print(traceback.format_exc())
+            logger.error(traceback.format_exc())
             raise HTTPException(
                 status_code=500,
                 detail={

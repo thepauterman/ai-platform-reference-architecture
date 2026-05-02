@@ -1,7 +1,10 @@
 import os
+import logging
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 # -----------------------------
 # Environment
@@ -50,4 +53,4 @@ def validate_config():
         raise RuntimeError(
             f"Missing required environment variables for ENV='{ENV}': {missing}"
         )
-    print(f"Config validated — ENV={ENV}")
+    logger.info(f"Config validated — ENV={ENV}")
