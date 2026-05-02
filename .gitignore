@@ -16,6 +16,10 @@ crash.log
 terraform-sa.json
 *.auto.tfvars
 
+# UI
+ui/node_modules/
+ui/dist/
+
 # OS
 .DS_Store
 Thumbs.db

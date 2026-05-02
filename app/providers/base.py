@@ -9,9 +9,14 @@ class BaseProvider(ABC):
     """
 
     @abstractmethod
-    def call(self, prompt: str) -> str:
+    def call(self, prompt: str) -> dict:
         """
-        Send a prompt to the model and return the response text.
-        Each provider implements this differently internally.
+        Send a prompt to the model and return a result dict:
+        {
+            "text": str,         # response text
+            "tokens_used": int,  # total tokens (input + output)
+            "latency_ms": float, # wall-clock time for the API call
+            "model_name": str,   # exact model identifier
+        }
         """
         pass

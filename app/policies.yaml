@@ -41,8 +41,8 @@ unsafe_content:
 # Routing policies
 # -----------------------------
 routing:
-  default_provider: openai
-  fallback_provider: openai
+  default_provider: anthropic
+  fallback_provider: anthropic
   approved_providers:
     - openai
     - anthropic

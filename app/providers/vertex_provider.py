@@ -1,4 +1,5 @@
 import os
+import time
 import vertexai
 from vertexai.generative_models import GenerativeModel
 from .base import BaseProvider
@@ -18,9 +19,20 @@ class VertexProvider(BaseProvider):
         )
         self.model = GenerativeModel("gemini-2.0-flash-001")
 
-    def call(self, prompt: str) -> str:
+    def call(self, prompt: str) -> dict:
+        t0 = time.perf_counter()
         response = self.model.generate_content(
             prompt,
             generation_config={"max_output_tokens": 500}
         )
-        return response.text
+        latency_ms = round((time.perf_counter() - t0) * 1000, 1)
+
+        usage = response.usage_metadata
+        tokens_used = (usage.prompt_token_count + usage.candidates_token_count) if usage else 0
+
+        return {
+            "text": response.text,
+            "tokens_used": tokens_used,
+            "latency_ms": latency_ms,
+            "model_name": "gemini-2.0-flash-001",
+        }

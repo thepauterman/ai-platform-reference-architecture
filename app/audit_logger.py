@@ -146,6 +146,47 @@ def _get_logs_from_firestore(limit):
 
 
 # -----------------------------
+# Get single log by request_id
+# -----------------------------
+def get_log_by_request_id(request_id: str) -> dict | None:
+    if AUDIT_BACKEND == "firestore":
+        return _get_log_by_id_firestore(request_id)
+    else:
+        return _get_log_by_id_sqlite(request_id)
+
+
+def _get_log_by_id_sqlite(request_id: str) -> dict | None:
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    row = conn.execute(
+        "SELECT * FROM audit_log WHERE request_id = ? LIMIT 1",
+        (request_id,)
+    ).fetchone()
+    conn.close()
+    if not row:
+        return None
+    entry = dict(row)
+    return {
+        "id": entry["id"],
+        "request_id": entry["request_id"],
+        "timestamp": entry["timestamp"],
+        "timestamp_pt": _convert_to_pt(entry["timestamp"]),
+        "prompt": entry["prompt"],
+        "outcome": entry["outcome"],
+        "metadata": json.loads(entry["metadata"]) if entry.get("metadata") else {}
+    }
+
+
+def _get_log_by_id_firestore(request_id: str) -> dict | None:
+    from google.cloud import firestore
+    db = firestore.Client(project=GCP_PROJECT_ID, database="default")
+    doc = db.collection(FIRESTORE_COLLECTION).document(request_id).get()
+    if not doc.exists:
+        return None
+    return doc.to_dict()
+
+
+# -----------------------------
 # Convert timestamp to PT
 # -----------------------------
 def _convert_to_pt(utc_timestamp: str) -> str:
