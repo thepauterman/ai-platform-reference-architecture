@@ -1,0 +1,84 @@
+# AI Governance Gateway — Policy Configuration
+# This file defines the governance rules applied to all requests.
+# Changes here take effect on next deployment.
+
+# -----------------------------
+# Input validation
+# -----------------------------
+input:
+  min_length: 2
+  max_length: 4000
+
+# -----------------------------
+# PII detection
+# Detected PII is redacted before the prompt reaches any model provider.
+# -----------------------------
+pii:
+  enabled: true
+  patterns:
+    EMAIL:       '[\w\.-]+@[\w\.-]+\.\w{2,}'
+    SSN:         '\b\d{3}-\d{2}-\d{4}\b'
+    PHONE:       '\b(\+1[-.\s]?)?\(?\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}\b'
+    CREDIT_CARD: '\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b'
+  action: redact  # redact | block
+
+# -----------------------------
+# Blocked keywords
+# Requests containing these phrases are rejected before routing.
+# -----------------------------
+unsafe_content:
+  enabled: true
+  action: block
+  keywords:
+    - "ignore previous instructions"
+    - "ignore all instructions"
+    - "jailbreak"
+    - "dan mode"
+    - "prompt injection"
+    - "disregard your instructions"
+
+# -----------------------------
+# Routing policies
+# -----------------------------
+routing:
+  default_provider: openai
+  fallback_provider: openai
+  approved_providers:
+    - openai
+    - anthropic
+    - vertex
+  classification:
+    complex:
+      provider: anthropic
+      trigger_keywords:
+        - analyse
+        - analyze
+        - compare
+        - summarise
+        - summarize
+        - explain in detail
+        - evaluate
+        - assess
+        - critique
+        - recommend
+        - strategy
+        - architecture
+        - design
+    standard:
+      provider: openai
+      trigger: "prompt length > 200 characters"
+    simple:
+      provider: vertex
+      trigger: "default"
+
+# -----------------------------
+# Audit logging
+# -----------------------------
+audit:
+  enabled: true
+  backend: firestore   # firestore | sqlite
+  log_outcomes:
+    - approved
+    - blocked
+    - error
+  retention_days: 90

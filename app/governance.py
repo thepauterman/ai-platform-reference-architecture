@@ -1,32 +1,37 @@
 import re
+import logging
+from policies import POLICIES
+
+logger = logging.getLogger(__name__)
 
 # -----------------------------
-# PII patterns
+# Load from policies.yaml
 # -----------------------------
-PII_PATTERNS = {
+_pii_config = POLICIES.get("pii", {})
+_input_config = POLICIES.get("input", {})
+_unsafe_config = POLICIES.get("unsafe_content", {})
+
+PII_PATTERNS = _pii_config.get("patterns", {
     "EMAIL": r'[\w\.-]+@[\w\.-]+\.\w{2,}',
     "SSN": r'\b\d{3}-\d{2}-\d{4}\b',
     "PHONE": r'\b(\+1[-.\s]?)?\(?\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}\b',
     "CREDIT_CARD": r'\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b',
-}
+})
 
-# -----------------------------
-# Blocked keywords
-# -----------------------------
-BLOCKED_KEYWORDS = [
+BLOCKED_KEYWORDS = _unsafe_config.get("keywords", [
     "ignore previous instructions",
     "ignore all instructions",
     "jailbreak",
     "dan mode",
     "prompt injection",
     "disregard your instructions",
-]
+])
 
-# -----------------------------
-# Input limits
-# -----------------------------
-MIN_PROMPT_LENGTH = 2
-MAX_PROMPT_LENGTH = 4000
+MIN_PROMPT_LENGTH = _input_config.get("min_length", 2)
+MAX_PROMPT_LENGTH = _input_config.get("max_length", 4000)
+
+PII_ACTION = _pii_config.get("action", "redact")
+UNSAFE_ACTION = _unsafe_config.get("action", "block")
 
 
 def validate_input(prompt: str) -> dict:
@@ -107,8 +112,16 @@ def inspect(prompt: str) -> dict:
             "original_prompt": prompt,
         }
 
-    # Step 3 — mask PII
+    # Step 3 — mask or block PII
     masked_prompt, pii_detected = mask_pii(prompt)
+    if pii_detected and PII_ACTION == "block":
+        return {
+            "approved": False,
+            "reason": f"PII detected and policy action is block: {pii_detected}",
+            "masked_prompt": None,
+            "pii_detected": pii_detected,
+            "original_prompt": prompt,
+        }
 
     return {
         "approved": True,

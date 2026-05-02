@@ -6,3 +6,4 @@ anthropic==0.49.0
 google-cloud-aiplatform==1.91.0
 python-dotenv==1.0.0
 google-cloud-firestore==2.19.0
+pyyaml==6.0.2

@@ -1,19 +1,29 @@
 import os
+import logging
+from policies import POLICIES
+
+logger = logging.getLogger(__name__)
 
 # -----------------------------
-# Approved model list
-# Only providers in this list can be selected
+# Load from policies.yaml
 # -----------------------------
-APPROVED_PROVIDERS = ["openai", "anthropic", "vertex"]
-DEFAULT_PROVIDER = os.getenv("DEFAULT_PROVIDER", "openai")
-FALLBACK_PROVIDER = "openai"
+_routing_config = POLICIES.get("routing", {})
+_classification = _routing_config.get("classification", {})
 
-# Keywords that signal a complex request
-COMPLEXITY_KEYWORDS = [
+APPROVED_PROVIDERS = _routing_config.get("approved_providers", ["openai", "anthropic", "vertex"])
+DEFAULT_PROVIDER = os.getenv("DEFAULT_PROVIDER", _routing_config.get("default_provider", "openai"))
+FALLBACK_PROVIDER = _routing_config.get("fallback_provider", "openai")
+
+COMPLEXITY_KEYWORDS = _classification.get("complex", {}).get("trigger_keywords", [
     "analyse", "analyze", "compare", "summarise", "summarize",
     "explain in detail", "evaluate", "assess", "critique",
     "recommend", "strategy", "architecture", "design"
-]
+])
+
+COMPLEX_PROVIDER = _classification.get("complex", {}).get("provider", "anthropic")
+STANDARD_PROVIDER = _classification.get("standard", {}).get("provider", "openai")
+SIMPLE_PROVIDER = _classification.get("simple", {}).get("provider", "vertex")
+
 
 def classify_request(prompt: str) -> str:
     """
@@ -33,18 +43,16 @@ def classify_request(prompt: str) -> str:
 def select_provider(prompt: str) -> str:
     """
     Select the appropriate provider based on request classification.
-    Complex   → Anthropic (best reasoning)
-    Standard  → OpenAI (balanced)
-    Simple    → Vertex AI (cheapest)
+    Rules loaded from policies.yaml.
     """
     classification = classify_request(prompt)
 
     if classification == "complex":
-        return "anthropic"
+        return COMPLEX_PROVIDER
     elif classification == "standard":
-        return "openai"
+        return STANDARD_PROVIDER
     else:
-        return "vertex"
+        return SIMPLE_PROVIDER
 
 
 def get_route(prompt: str) -> dict:
@@ -55,7 +63,6 @@ def get_route(prompt: str) -> dict:
     """
     provider = select_provider(prompt)
 
-    # Safety check — only approved providers allowed
     if provider not in APPROVED_PROVIDERS:
         provider = DEFAULT_PROVIDER
 
