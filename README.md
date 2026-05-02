@@ -70,7 +70,7 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Basic tracing  
   - [x] Audit logs  
 
-- [ ] Phase 9: Hardening + Production Deploy
+- [x] Phase 9: Hardening + Production Deploy
   - [x] Env configs (dev/prod)
   - [x] Config validation
   - [x] Retries + timeouts
@@ -78,8 +78,8 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Deploy to Cloud Run (full stack)
   - [x] Add API key authentication
   - [x] Deploy consistency (CI/CD pipeline)
-  - [ ] Cleanup + refactor
-  - [ ] Update Terraform for Firestore + IAM
+  - [x] Cleanup + refactor
+  - [x] Update Terraform for Firestore + IAM
 
 - [ ] Phase 10: UI / Visual Dashboard
   - [ ] Real-time query visualiser

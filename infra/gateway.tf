@@ -77,7 +77,7 @@ resource "google_cloud_run_v2_service" "gateway" {
     service_account = google_service_account.gateway_runtime.email
 
     containers {
-      image = "us-central1-docker.pkg.dev/silver-origin-161220/ai-gateway/gateway:v7"
+      image = "us-central1-docker.pkg.dev/silver-origin-161220/ai-gateway/gateway:latest"
 
       env {
         name = "MODEL_API_KEY"
@@ -117,6 +117,42 @@ resource "google_cloud_run_v2_service" "gateway" {
         name  = "GCP_PROJECT_ID"
         value = "silver-origin-161220"
       }
+
+      env {
+        name  = "AUDIT_BACKEND"
+        value = "firestore"
+      }
+
+      env {
+        name  = "ENV"
+        value = "prod"
+      }
+
+      env {
+        name  = "AUDIT_BACKEND"
+        value = "firestore"
+      }
+
+      env {
+        name  = "ENV"
+        value = "prod"
+      }
+
+      env {
+        name  = "GCP_REGION"
+        value = "us-central1"
+      }
+
+      env {
+        name = "GATEWAY_API_KEY"
+        value_source {
+          secret_key_ref {
+            secret  = "gateway-api-key"
+            version = "latest"
+          }
+        }
+      }
+
     }
   }
 
@@ -136,3 +172,38 @@ resource "google_cloud_run_v2_service" "gateway" {
 #   role     = "roles/run.invoker"
 #   member   = "allUsers"
 # }
+
+# -----------------------------
+# Firestore
+# -----------------------------
+resource "google_project_service" "firestore" {
+  project = var.project_id
+  service = "firestore.googleapis.com"
+}
+
+resource "google_firestore_database" "audit" {
+  project     = var.project_id
+  name        = "default"
+  location_id = var.region
+  type        = "FIRESTORE_NATIVE"
+
+  depends_on = [google_project_service.firestore]
+}
+
+# -----------------------------
+# IAM - Firestore write access for runtime SA
+# -----------------------------
+resource "google_project_iam_member" "gateway_firestore_access" {
+  project = var.project_id
+  role    = "roles/datastore.user"
+  member  = "serviceAccount:${google_service_account.gateway_runtime.email}"
+}
+
+# -----------------------------
+# IAM - Vertex AI access for runtime SA
+# -----------------------------
+resource "google_project_iam_member" "gateway_vertex_access" {
+  project = var.project_id
+  role    = "roles/aiplatform.user"
+  member  = "serviceAccount:${google_service_account.gateway_runtime.email}"
+}
