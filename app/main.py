@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException, Depends, Security, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security.api_key import APIKeyHeader
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 import time
 import uuid
@@ -288,4 +289,8 @@ def query(request: QueryRequest, _ = Depends(verify_api_key)):
 # In local dev the directory may be absent, so the mount is conditional.
 UI_DIR = os.path.join(os.path.dirname(__file__), "static")
 if os.path.isdir(UI_DIR):
+    @app.get("/", include_in_schema=False)
+    def serve_ui_root():
+        return FileResponse(os.path.join(UI_DIR, "index.html"))
+
     app.mount("/", StaticFiles(directory=UI_DIR, html=True), name="ui")
