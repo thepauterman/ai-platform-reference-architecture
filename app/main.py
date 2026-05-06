@@ -4,6 +4,7 @@ from resilience import with_retry
 from fastapi import FastAPI, HTTPException, Depends, Security, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security.api_key import APIKeyHeader
+from fastapi.staticfiles import StaticFiles
 
 import time
 import uuid
@@ -279,3 +280,12 @@ def query(request: QueryRequest, _ = Depends(verify_api_key)):
                     "request_id": request_id
                 }
             )
+
+# -----------------------------
+# UI static assets (production)
+# -----------------------------
+# Mounted last so all API routes above take precedence.
+# In local dev the directory may be absent, so the mount is conditional.
+UI_DIR = os.path.join(os.path.dirname(__file__), "static")
+if os.path.isdir(UI_DIR):
+    app.mount("/", StaticFiles(directory=UI_DIR, html=True), name="ui")

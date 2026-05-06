@@ -23,7 +23,10 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t us-central1-docker.pkg.dev/silver-origin-161220/ai-gateway/gateway:latest ./app
+          docker build \
+            --build-arg VITE_API_KEY="${{ secrets.VITE_API_KEY }}" \
+            -t us-central1-docker.pkg.dev/silver-origin-161220/ai-gateway/gateway:latest \
+            -f Dockerfile .
 
       - name: Push Docker image
         run: |

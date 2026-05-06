@@ -9,7 +9,8 @@ The reference architecture provides a foundation for designing and building a mo
 The goal is to understand how AI systems evolve from simple applications into reusable, scalable platforms.
 
 - docs/   → architecture and design artifacts
-- app/    → gateway service implementation
+- app/    → gateway service implementation (FastAPI backend)
+- ui/     → control-plane dashboard (Vite + React + TypeScript)
 - infra/  → Terraform infrastructure for GCP
 
 ---
@@ -81,14 +82,14 @@ The goal is to understand how AI systems evolve from simple applications into re
   - [x] Cleanup + refactor
   - [x] Update Terraform for Firestore + IAM
 
-- [ ] Phase 10: UI / Visual Dashboard
-  - [ ] Real-time query visualiser
-  - [ ] Animated architecture diagram
-  - [ ] Each platform layer highlights as request flows through
-  - [ ] Model selection shown inline
-  - [ ] Policy decisions surfaced visually
-  - [ ] Latency per layer displayed
-  - [ ] Built with Claude Code
+- [x] Phase 10: UI / Visual Dashboard
+  - [x] Real-time query visualiser
+  - [x] Animated architecture diagram
+  - [x] Each platform layer highlights as request flows through
+  - [x] Model selection shown inline
+  - [x] Policy decisions surfaced visually
+  - [x] Latency per layer displayed
+  - [x] Built with Claude Code
 
 - [ ] Phase 11: RAG + Vector DB
   - [ ] Vector DB (Vertex AI Vector Search)
@@ -171,6 +172,26 @@ Selecting models dynamically based on prompt complexity, cost, and capability. R
 
 ### Observability & Evaluation
 Monitoring prompts, responses, and system behavior to improve quality and reliability.
+
+---
+
+## 🖥️ Control Plane UI
+
+A real-time dashboard for the gateway lives in `ui/`. It visualises the full request pipeline (governance → routing → inference), shows the audit log, and surfaces aggregated metrics. Built with Vite, React, and TypeScript.
+
+**Local development** (two terminals):
+
+```bash
+# Backend
+cd app && python -m uvicorn main:app --host 0.0.0.0 --port 8080
+
+# Frontend (proxies /health, /query, /audit, /metrics to :8080)
+cd ui && npm install && npm run dev
+```
+
+The UI expects `VITE_API_KEY` in `ui/.env` to match the backend's `GATEWAY_API_KEY`.
+
+**Production**: a single multi-stage container (`Dockerfile` at repo root) builds the UI with Node and serves the bundled assets from FastAPI. The CI/CD workflow passes `VITE_API_KEY` as a Docker build-arg from a GitHub secret.
 
 ---
 

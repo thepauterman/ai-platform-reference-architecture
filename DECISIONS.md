@@ -148,3 +148,20 @@ Needed to provision and manage GCP infrastructure.
 
 **Decision**  
 Terraform. Infrastructure as code ensures the environment is reproducible, auditable, and can be torn down and rebuilt from scratch. All GCP resources (Cloud Run, Artifact Registry, Secret Manager, IAM, Firestore) are defined in `infra/` and version-controlled alongside the application code.
+
+---
+
+## ADR-009: Vite + React + TypeScript for the control plane UI, served from FastAPI
+
+**Date:** 2026-05  
+**Status:** Accepted
+
+**Context**  
+Phase 10 added a real-time dashboard that visualises the gateway pipeline, audit log, and aggregated metrics. We needed both a frontend stack and a deployment model that fits a single-service Cloud Run target.
+
+**Options considered**  
+- **Frontend stack** — Server-rendered Jinja templates (simple, but no client-side animation), Next.js (full-stack but heavyweight for a dashboard that only consumes existing APIs), Vite + React + TypeScript (fast HMR, single-page bundle, type safety end-to-end).
+- **Deployment** — Two services (separate static-hosting bucket + Cloud Run for the API, requires CORS and a second deploy target), single multi-stage container (Node builds the bundle, Python serves it as static files, one image and one Cloud Run service).
+
+**Decision**  
+Vite + React + TypeScript, packaged with the backend in a single multi-stage container served by FastAPI's `StaticFiles`. The UI calls the API on the same origin, eliminating CORS in production. CI/CD stays a single `docker build` + `gcloud run deploy`. `VITE_API_KEY` is passed as a build-arg so it lives in the bundle the same way `GATEWAY_API_KEY` lives in Secret Manager — acceptable for a single-tenant deployment; the right upgrade path for multi-tenant is a session-cookie auth flow that doesn't bake credentials into the bundle.
