@@ -184,7 +184,7 @@ export default function ChatPanel({ onQueryStart, onQueryComplete }: Props) {
             autoFocus
           />
           <button
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
             disabled={loading || !input.trim()}
             className="w-11 h-11 flex items-center justify-center rounded-full bg-card-border/60 hover:bg-card-border transition-colors disabled:opacity-30"
           >
