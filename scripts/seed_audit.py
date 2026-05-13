@@ -25,7 +25,7 @@ PROVIDERS = ["openai", "anthropic", "vertex"]
 MODEL_NAMES = {
     "openai": "gpt-4o-mini",
     "anthropic": "claude-sonnet-4-6",
-    "vertex": "gemini-2.0-flash-001",
+    "vertex": "gemini-2.5-flash",
 }
 CLASSIFICATIONS = {"openai": "standard", "anthropic": "complex", "vertex": "simple"}
 PROVIDER_WEIGHTS = [0.55, 0.15, 0.30]  # openai dominates, vertex second, anthropic least

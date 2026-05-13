@@ -104,7 +104,7 @@ export default function AuditLog({ onTraceLoaded, queryVersion = 0 }: Props) {
           >
             {logs.map(log => (
               <option key={log.request_id} value={log.request_id}>
-                REQ_{log.request_id.slice(0, 8)} — {log.outcome}
+                REQ_{log.request_id.slice(0, 8)} - {log.outcome}
               </option>
             ))}
           </select>

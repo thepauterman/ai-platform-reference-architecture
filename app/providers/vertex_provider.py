@@ -12,7 +12,7 @@ class VertexProvider(BaseProvider):
     Gateway never calls this directly.
     """
 
-    MODEL_NAME = "gemini-2.0-flash-001"
+    MODEL_NAME = "gemini-2.5-flash"
 
     def __init__(self):
         vertexai.init(

@@ -49,7 +49,7 @@ export default function App() {
   }, [clearTimers])
 
   return (
-    <div className="h-screen grid grid-cols-[1fr_640px]">
+    <div className="h-screen grid grid-cols-[1fr_800px]">
       <main className="overflow-y-auto">
         <Header />
         <PipelineFlow steps={pipelineSteps} activeStage={activeStage} />

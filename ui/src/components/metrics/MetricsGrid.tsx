@@ -48,12 +48,12 @@ export default function MetricsGrid({ queryVersion = 0 }: Props) {
         { label: 'Used Models', value: String(metrics.active_models), delta: metrics.deltas.active_models },
       ]
     : [
-        { label: 'Total Requests', value: '—', delta: '+0.0%' },
-        { label: 'Success Rate', value: '—', delta: '+0.0%' },
-        { label: 'P95 Latency', value: '—', unit: 'ms', delta: '+0.0%' },
-        { label: 'Cost / Request', value: '—', delta: '+0.0%' },
-        { label: 'Total Tokens', value: '—', delta: '+0.0%' },
-        { label: 'Used Models', value: '—', delta: '+0.0%' },
+        { label: 'Total Requests', value: '-', delta: '+0.0%' },
+        { label: 'Success Rate', value: '-', delta: '+0.0%' },
+        { label: 'P95 Latency', value: '-', unit: 'ms', delta: '+0.0%' },
+        { label: 'Cost / Request', value: '-', delta: '+0.0%' },
+        { label: 'Total Tokens', value: '-', delta: '+0.0%' },
+        { label: 'Used Models', value: '-', delta: '+0.0%' },
       ]
 
   return (
