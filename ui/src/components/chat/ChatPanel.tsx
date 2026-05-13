@@ -54,8 +54,8 @@ export default function ChatPanel({ onQueryStart, onQueryComplete }: Props) {
     inputRef.current?.focus()
   }, [loading])
 
-  const handleSubmit = async () => {
-    const prompt = input.trim()
+  const handleSubmit = async (overridePrompt?: string) => {
+    const prompt = (overridePrompt ?? input).trim()
     if (!prompt || loading) return
 
     setInput('')
@@ -160,10 +160,7 @@ export default function ChatPanel({ onQueryStart, onQueryComplete }: Props) {
         {DEMO_PROMPTS.map(({ title, prompt }) => (
           <button
             key={title}
-            onClick={() => {
-              setInput(prompt)
-              inputRef.current?.focus()
-            }}
+            onClick={() => handleSubmit(prompt)}
             disabled={loading}
             className="flex flex-col items-center justify-center gap-1 px-6 py-4 rounded-lg border border-card-border bg-card hover:bg-accent-blue/20 hover:border-accent-blue transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >

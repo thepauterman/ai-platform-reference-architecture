@@ -19,6 +19,16 @@ PII_PATTERNS = _pii_config.get("patterns", {
     "CREDIT_CARD": r'\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b',
 })
 
+# Format-preserving placeholders so downstream models don't treat the
+# masked prompt as a moderation signal (Gemini was truncating responses
+# when it saw [REDACTED_SSN] tags).
+PII_PLACEHOLDERS = {
+    "EMAIL": "user@example.com",
+    "SSN": "XXX-XX-XXXX",
+    "PHONE": "XXX-XXX-XXXX",
+    "CREDIT_CARD": "XXXX-XXXX-XXXX-XXXX",
+}
+
 BLOCKED_KEYWORDS = _unsafe_config.get("keywords", [
     "ignore previous instructions",
     "ignore all instructions",
@@ -61,7 +71,7 @@ def detect_pii(prompt: str) -> list:
 
 def mask_pii(prompt: str) -> tuple[str, list]:
     """
-    Mask PII in prompt with [REDACTED_TYPE] placeholders.
+    Mask PII in prompt with format-preserving placeholders.
     Returns: (masked_prompt, list of detected PII types)
     """
     detected = []
@@ -69,7 +79,8 @@ def mask_pii(prompt: str) -> tuple[str, list]:
     for pii_type, pattern in PII_PATTERNS.items():
         if re.search(pattern, masked):
             detected.append(pii_type)
-            masked = re.sub(pattern, f"[REDACTED_{pii_type}]", masked)
+            replacement = PII_PLACEHOLDERS.get(pii_type, "[REDACTED]")
+            masked = re.sub(pattern, replacement, masked)
     return masked, detected
 
 
