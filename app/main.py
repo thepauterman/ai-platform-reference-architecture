@@ -14,7 +14,7 @@ import traceback
 import logging
 
 from models import QueryRequest, QueryResponse
-from providers import get_provider
+from providers import get_provider, PROVIDER_MODELS
 from router import get_route
 from governance import inspect as governance_inspect
 from audit_logger import init_db, log_request, get_recent_logs, get_log_by_request_id
@@ -159,7 +159,7 @@ def query(request: QueryRequest, _ = Depends(verify_api_key)):
     pipeline_trace.append({
         "step": "ROUTING_DECISION",
         "status": "OK",
-        "detail": f"{provider_name} ({route['classification']})",
+        "detail": f"{PROVIDER_MODELS.get(provider_name, provider_name)} (auto)",
         "latency_ms": route_ms,
     })
 

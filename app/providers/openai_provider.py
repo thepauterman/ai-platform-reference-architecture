@@ -10,9 +10,11 @@ class OpenAIProvider(BaseProvider):
     Wraps the OpenAI SDK - gateway never calls this directly.
     """
 
+    MODEL_NAME = "gpt-4o-mini"
+
     def __init__(self):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        self.model = "gpt-4o-mini"
+        self.model = self.MODEL_NAME
 
     def call(self, prompt: str) -> dict:
         t0 = time.perf_counter()

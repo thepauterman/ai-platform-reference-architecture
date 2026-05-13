@@ -12,12 +12,14 @@ class VertexProvider(BaseProvider):
     Gateway never calls this directly.
     """
 
+    MODEL_NAME = "gemini-2.0-flash-001"
+
     def __init__(self):
         vertexai.init(
             project=os.getenv("GCP_PROJECT_ID"),
             location=os.getenv("GCP_REGION", "us-central1")
         )
-        self.model = GenerativeModel("gemini-2.0-flash-001")
+        self.model = GenerativeModel(self.MODEL_NAME)
 
     def call(self, prompt: str) -> dict:
         t0 = time.perf_counter()
@@ -34,5 +36,5 @@ class VertexProvider(BaseProvider):
             "text": response.text,
             "tokens_used": tokens_used,
             "latency_ms": latency_ms,
-            "model_name": "gemini-2.0-flash-001",
+            "model_name": self.MODEL_NAME,
         }

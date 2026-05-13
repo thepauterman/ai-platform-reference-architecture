@@ -10,9 +10,11 @@ class AnthropicProvider(BaseProvider):
     Wraps the Anthropic SDK - gateway never calls this directly.
     """
 
+    MODEL_NAME = "claude-sonnet-4-6"
+
     def __init__(self):
         self.client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-        self.model = "claude-sonnet-4-6"
+        self.model = self.MODEL_NAME
 
     def call(self, prompt: str) -> dict:
         t0 = time.perf_counter()
