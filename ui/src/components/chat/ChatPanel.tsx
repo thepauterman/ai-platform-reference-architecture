@@ -91,13 +91,13 @@ export default function ChatPanel({ onQueryStart, onQueryComplete }: Props) {
           <div key={i}>
             {msg.role === 'user' ? (
               <div className="flex justify-end">
-                <div className="bg-card-border/60 rounded-lg px-5 py-3 max-w-[90%] text-xl text-white">
+                <div className="bg-card-border/60 rounded-lg px-5 py-3 max-w-[90%] text-[17px] text-white">
                   {msg.content}
                 </div>
               </div>
             ) : (
               <div>
-                <div className="text-xl text-gray-300 leading-relaxed whitespace-pre-wrap [&>p]:mb-3">
+                <div className="text-[17px] text-gray-300 leading-relaxed whitespace-pre-wrap [&>p]:mb-3">
                   {msg.content.split('\n\n').map((para, j) => (
                     <p key={j}>{para}</p>
                   ))}
@@ -162,7 +162,7 @@ export default function ChatPanel({ onQueryStart, onQueryComplete }: Props) {
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSubmit()}
             placeholder="Ask AI Gateway..."
-            className="flex-1 bg-transparent text-xl text-white placeholder-muted focus:outline-none"
+            className="flex-1 bg-transparent text-[17px] text-white placeholder-muted focus:outline-none"
             disabled={loading}
             autoFocus
           />
