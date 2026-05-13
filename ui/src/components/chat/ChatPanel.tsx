@@ -13,7 +13,7 @@ interface Message {
 const DEMO_PROMPTS = [
   {
     label: 'Demo: PII',
-    prompt: 'My name is John Smith, SSN 123-45-6789. What are our data retention rules?',
+    prompt: 'Employee John Smith, SSN 123-45-6789, is leaving the company. What is our document retention policy for departing employees?',
   },
   {
     label: 'Demo: Injection',
