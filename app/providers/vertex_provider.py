@@ -12,7 +12,7 @@ class VertexProvider(BaseProvider):
     Gateway never calls this directly.
     """
 
-    MODEL_NAME = "gemini-2.5-flash"
+    MODEL_NAME = "gemini-2.5-flash-lite"
 
     def __init__(self):
         vertexai.init(
@@ -25,7 +25,7 @@ class VertexProvider(BaseProvider):
         t0 = time.perf_counter()
         response = self.model.generate_content(
             prompt,
-            generation_config={"max_output_tokens": 500}
+            generation_config={"max_output_tokens": 800},
         )
         latency_ms = round((time.perf_counter() - t0) * 1000, 1)
 

@@ -23,7 +23,7 @@ const DEMO_PROMPTS = [
   },
   {
     title: 'Routing simple',
-    prompt: 'What is our data retention policy for customer records?',
+    prompt: 'Outline 5 standard practices for retaining customer data.',
   },
   {
     title: 'Routing complex',
