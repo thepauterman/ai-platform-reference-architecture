@@ -23,7 +23,7 @@ const DEMO_PROMPTS = [
   },
   {
     title: 'Routing standard',
-    prompt: 'Our team is putting together internal onboarding material for new hires joining next quarter who will be working with sensitive customer data. We need a list of the day-one operational practices they should follow.',
+    prompt: 'Our team is putting together internal onboarding material for new hires joining next quarter who will be working with sensitive customer data. List 5 day-one operational practices they should follow, one sentence each.',
   },
   {
     title: 'Routing complex',

@@ -22,7 +22,7 @@ class AnthropicProvider(BaseProvider):
             model=self.model,
             max_tokens=500,
             messages=[{"role": "user", "content": prompt}],
-            timeout=10
+            timeout=30
         )
         latency_ms = round((time.perf_counter() - t0) * 1000, 1)
 

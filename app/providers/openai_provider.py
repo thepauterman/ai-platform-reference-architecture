@@ -21,8 +21,8 @@ class OpenAIProvider(BaseProvider):
         response = self.client.chat.completions.create(
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=500,
-            timeout=10
+            max_tokens=250,
+            timeout=30
         )
         latency_ms = round((time.perf_counter() - t0) * 1000, 1)
 
