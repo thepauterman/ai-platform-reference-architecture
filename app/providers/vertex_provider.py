@@ -25,7 +25,7 @@ class VertexProvider(BaseProvider):
         t0 = time.perf_counter()
         response = self.model.generate_content(
             prompt,
-            generation_config={"max_output_tokens": 800},
+            generation_config={"max_output_tokens": 400},
         )
         latency_ms = round((time.perf_counter() - t0) * 1000, 1)
 
