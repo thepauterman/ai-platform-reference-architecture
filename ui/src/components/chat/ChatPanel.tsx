@@ -15,7 +15,7 @@ interface Message {
 const DEMO_PROMPTS = [
   {
     title: 'PII',
-    prompt: 'Employee John Smith, SSN 123-45-6789, is leaving the company. What is our document retention policy for departing employees? Answer in 3-4 short bullets.',
+    prompt: 'Employee John Smith, SSN 123-45-6789, is leaving the company. What is our document retention policy for departing employees? Answer in 3-4 short bullets using typical industry retention periods.',
   },
   {
     title: 'Injection',
